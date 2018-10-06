@@ -1,6 +1,7 @@
 # Bazel
 bazel-*
 .ijwb
+.cov
 
 # Maven
 target

@@ -1,0 +1,10 @@
+directories:
+  .
+  -.cov
+  -.idea
+
+test_sources:
+  src/test/java
+
+targets:
+  //src/...

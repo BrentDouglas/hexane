@@ -1,0 +1,128 @@
+version: '2'
+
+services:
+  mariadb_5_5:
+    image: mariadb:5.5
+    environment:
+      - MYSQL_USER=hexane
+      - MYSQL_PASSWORD=hexane
+      - MYSQL_DATABASE=hexane
+      - MYSQL_ROOT_PASSWORD=hexane
+    ports:
+      - "40055:3306"
+  mariadb_10_0:
+    image: mariadb:10.0
+    environment:
+      - MYSQL_USER=hexane
+      - MYSQL_PASSWORD=hexane
+      - MYSQL_DATABASE=hexane
+      - MYSQL_ROOT_PASSWORD=hexane
+    ports:
+      - "40100:3306"
+  mariadb_10_1:
+    image: mariadb:10.1
+    environment:
+      - MYSQL_USER=hexane
+      - MYSQL_PASSWORD=hexane
+      - MYSQL_DATABASE=hexane
+      - MYSQL_ROOT_PASSWORD=hexane
+    ports:
+      - "40101:3306"
+  mariadb_10_2:
+    image: mariadb:10.2
+    environment:
+      - MYSQL_USER=hexane
+      - MYSQL_PASSWORD=hexane
+      - MYSQL_DATABASE=hexane
+      - MYSQL_ROOT_PASSWORD=hexane
+    ports:
+      - "40102:3306"
+  mariadb_10_3:
+    image: mariadb:10.3
+    environment:
+      - MYSQL_USER=hexane
+      - MYSQL_PASSWORD=hexane
+      - MYSQL_DATABASE=hexane
+      - MYSQL_ROOT_PASSWORD=hexane
+    ports:
+      - "40103:3306"
+  mysql_5_5:
+    image: mysql:5.5
+    environment:
+      - MYSQL_USER=hexane
+      - MYSQL_PASSWORD=hexane
+      - MYSQL_DATABASE=hexane
+      - MYSQL_ROOT_PASSWORD=hexane
+    ports:
+      - "30055:3306"
+  mysql_5_6:
+    image: mysql:5.6
+    environment:
+      - MYSQL_USER=hexane
+      - MYSQL_PASSWORD=hexane
+      - MYSQL_DATABASE=hexane
+      - MYSQL_ROOT_PASSWORD=hexane
+    ports:
+      - "30056:3306"
+  mysql_5_7:
+    image: mysql:5.7
+    environment:
+      - MYSQL_USER=hexane
+      - MYSQL_PASSWORD=hexane
+      - MYSQL_DATABASE=hexane
+      - MYSQL_ROOT_PASSWORD=hexane
+    ports:
+      - "30057:3306"
+  mysql_8_0:
+    image: mysql:8.0
+    environment:
+      - MYSQL_USER=hexane
+      - MYSQL_PASSWORD=hexane
+      - MYSQL_DATABASE=hexane
+      - MYSQL_ROOT_PASSWORD=hexane
+    ports:
+      - "30080:3306"
+  oracle_11:
+    image: sath89/oracle-xe-11g
+    ports:
+      - "10011:1521"
+  postgresql_9_3:
+    image: postgres:9.3
+    environment:
+      - POSTGRES_USER=hexane
+      - POSTGRES_PASSWORD=hexane
+      - POSTGRES_DB=hexane
+    ports:
+      - "20093:5432"
+  postgresql_9_4:
+    image: postgres:9.4
+    environment:
+      - POSTGRES_USER=hexane
+      - POSTGRES_PASSWORD=hexane
+      - POSTGRES_DB=hexane
+    ports:
+      - "20094:5432"
+  postgresql_9_5:
+    image: postgres:9.5
+    environment:
+      - POSTGRES_USER=hexane
+      - POSTGRES_PASSWORD=hexane
+      - POSTGRES_DB=hexane
+    ports:
+      - "20095:5432"
+  postgresql_9_6:
+    image: postgres:9.6
+    environment:
+      - POSTGRES_USER=hexane
+      - POSTGRES_PASSWORD=hexane
+      - POSTGRES_DB=hexane
+    ports:
+      - "20096:5432"
+  postgresql_10_5:
+    image: postgres:10.5
+    environment:
+      - POSTGRES_USER=hexane
+      - POSTGRES_PASSWORD=hexane
+      - POSTGRES_DB=hexane
+    ports:
+      - "20105:5432"
