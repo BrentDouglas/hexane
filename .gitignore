@@ -1,0 +1,22 @@
+# Bazel
+bazel-*
+.ijwb
+
+# Maven
+target
+
+# VIM
+*.swp
+*~
+
+# IDEA
+*.iml
+*.ipr
+*.iws
+.idea/
+idea
+
+# Eclipse
+.metadata
+.project
+.settings
