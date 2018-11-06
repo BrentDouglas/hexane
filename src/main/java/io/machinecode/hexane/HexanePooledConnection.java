@@ -84,13 +84,9 @@ final class HexanePooledConnection extends Terminal implements PooledConnection 
       throw new SQLException(Msg.CONNECTION_CLOSED);
     }
     if (config.isCheckFatal()) {
-      try {
-        return new CheckedConnection(this, val, delegate.getConnection(), defaults);
-      } catch (final SQLException e) {
-        throw Util.handleFatalSQL(this, e);
-      }
+      return new CheckedConnection(this, val, val.getConnection(), defaults);
     } else {
-      return new UncheckedConnection(this, val, delegate.getConnection(), defaults);
+      return new UncheckedConnection(this, val, val.getConnection(), defaults);
     }
   }
 

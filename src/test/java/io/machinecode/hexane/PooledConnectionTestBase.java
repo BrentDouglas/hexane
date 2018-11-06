@@ -32,7 +32,6 @@ import java.sql.Statement;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
@@ -112,32 +111,6 @@ public abstract class PooledConnectionTestBase<
     }
 
     verify(pool).give(pooled);
-  }
-
-  @Test
-  public void getConnectionNormalOK() throws Exception {
-    when(delegate.getConnection()).thenThrow(TestUtil.getNormal());
-
-    try {
-      conn.getConnection();
-
-      fail();
-    } catch (final SQLException e) {
-      verifyZeroInteractions(pool);
-    }
-  }
-
-  @Test
-  public void getConnectionFatalRemoves() throws Exception {
-    when(delegate.getConnection()).thenThrow(TestUtil.getFatalState());
-
-    try {
-      conn.getConnection();
-
-      fail();
-    } catch (final SQLException e) {
-      verify(pool).remove(pooled);
-    }
   }
 
   @Test

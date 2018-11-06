@@ -29,7 +29,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 final class HexanePooledPool extends BasePool<PooledConnection> {
-  private final Defaults defaults;
   private final ConnectionPoolDataSource dataSource;
   private final Map<Pooled<PooledConnection>, ConnectionEventListener> connectionListeners =
       new ConcurrentHashMap<>();
@@ -38,8 +37,7 @@ final class HexanePooledPool extends BasePool<PooledConnection> {
 
   HexanePooledPool(
       final Config config, final Defaults defaults, final ConnectionPoolDataSource dataSource) {
-    super(config, HexanePooledPool.class);
-    this.defaults = defaults;
+    super(config, defaults, HexanePooledPool.class);
     this.dataSource = dataSource;
     executor.execute(task);
   }
@@ -94,14 +92,19 @@ final class HexanePooledPool extends BasePool<PooledConnection> {
       } else {
         xa = dataSource.getPooledConnection(user, config.getPassword());
       }
-      conn = xa.getConnection();
-      if (!conn.isValid(config.getValidationTimeout())) {
-        return null;
-      }
-      defaults.initialize(conn);
       return xa;
     } catch (final SQLException e) {
       error(Msg.EXCEPTION_OPENING_CONNECTION, Util.close(conn, e));
+      return null;
+    }
+  }
+
+  @Override
+  protected Connection getConnection(final PooledConnection item) {
+    try {
+      return item.getConnection();
+    } catch (final SQLException e) {
+      error(Msg.EXCEPTION_OPENING_CONNECTION, e);
       return null;
     }
   }

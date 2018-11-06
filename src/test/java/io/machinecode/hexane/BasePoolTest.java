@@ -27,9 +27,11 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 public class BasePoolTest extends Assert {
@@ -44,6 +46,7 @@ public class BasePoolTest extends Assert {
     FixedClock.setTime(0);
     Clock.INSTANCE = new FixedClock();
     conn = mock(Connection.class);
+    when(conn.isValid(anyInt())).thenReturn(true);
     closer = mock(AutoCloseable.class);
     config =
         Hexane.builder()
@@ -55,10 +58,15 @@ public class BasePoolTest extends Assert {
             .setLifetimeTimeout(200, Clock.getUnit())
             .getConfig();
     pool =
-        new BasePool<Connection>(config) {
+        new BasePool<Connection>(config, Defaults.create(config, conn)) {
           @Override
           protected Connection getConnection() {
             return conn;
+          }
+
+          @Override
+          protected Connection getConnection(final Connection item) {
+            return item;
           }
 
           @Override
@@ -223,21 +231,27 @@ public class BasePoolTest extends Assert {
 
   @Test
   public void takeWrapsInterruptAsSQLException() throws Exception {
+    final Config config =
+        Hexane.builder()
+            .setMaintenanceExecutor(
+                cmd -> {
+                  // Ignore
+                })
+            .setCorePoolSize(2)
+            .setMaxPoolSize(4)
+            .setConnectionTimeout(10, TimeUnit.SECONDS)
+            .setIdleTimeout(10, Clock.getUnit())
+            .setLifetimeTimeout(200, Clock.getUnit())
+            .getConfig();
     pool =
-        new BasePool<Connection>(
-            Hexane.builder()
-                .setMaintenanceExecutor(
-                    cmd -> {
-                      // Ignore
-                    })
-                .setCorePoolSize(2)
-                .setMaxPoolSize(4)
-                .setConnectionTimeout(10, TimeUnit.SECONDS)
-                .setIdleTimeout(10, Clock.getUnit())
-                .setLifetimeTimeout(200, Clock.getUnit())
-                .getConfig()) {
+        new BasePool<Connection>(config, Defaults.create(config, conn)) {
           @Override
           protected Connection getConnection() {
+            return conn;
+          }
+
+          @Override
+          protected Connection getConnection(final Connection item) {
             return conn;
           }
 
@@ -269,5 +283,57 @@ public class BasePoolTest extends Assert {
     assertTrue(worker.isInterrupted());
 
     finish.set(true);
+  }
+
+  @Test
+  public void getConnectionInvalid() throws SQLException {
+    when(conn.isValid(anyInt())).thenReturn(false);
+    final int total = pool.getTotal();
+    final int free = pool.getFree();
+
+    pool.addNew(total, total + 1, 0);
+
+    assertEquals(total, pool.getTotal());
+    assertEquals(free, pool.getFree());
+  }
+
+  @Test
+  public void getConnectionIsValidFails() throws SQLException {
+    when(conn.isValid(anyInt())).thenThrow(TestUtil.getNormal());
+    final int total = pool.getTotal();
+    final int free = pool.getFree();
+
+    pool.addNew(total, total + 1, 0);
+
+    assertEquals(total, pool.getTotal());
+    assertEquals(free, pool.getFree());
+  }
+
+  @Test
+  public void getConnectionFails() throws SQLException {
+    pool =
+        new BasePool<Connection>(config, Defaults.create(config, conn)) {
+          @Override
+          protected Connection getConnection() {
+            return conn;
+          }
+
+          @Override
+          protected Connection getConnection(final Connection item) {
+            return null;
+          }
+
+          @Override
+          protected AutoCloseable getCloser(final Connection item) {
+            return closer;
+          }
+        };
+    final int total = pool.getTotal();
+    final int free = pool.getFree();
+
+    pool.addNew(total, total + 1, 0);
+
+    assertEquals(total, pool.getTotal());
+    assertEquals(free, pool.getFree());
   }
 }

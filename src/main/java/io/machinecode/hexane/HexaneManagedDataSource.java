@@ -29,7 +29,8 @@ import java.sql.SQLFeatureNotSupportedException;
  *
  * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
  */
-public final class HexaneManagedDataSource extends BaseDataSource<Connection, HexanePool, DataSource>
+public final class HexaneManagedDataSource
+    extends BaseDataSource<Connection, HexanePool, DataSource>
     implements ConnectionPoolDataSource, AutoCloseable {
   private final Defaults defaults;
 
@@ -49,5 +50,10 @@ public final class HexaneManagedDataSource extends BaseDataSource<Connection, He
   public PooledConnection getPooledConnection(final String user, final String password)
       throws SQLException {
     throw new SQLFeatureNotSupportedException();
+  }
+
+  @Override
+  public Connection getConnection() throws SQLException {
+    return getPooledConnection().getConnection();
   }
 }

@@ -114,14 +114,6 @@ public class HexanePooledPoolTest extends Assert {
   }
 
   @Test
-  public void getConnectionInvalid() throws SQLException {
-    when(pooled.getConnection()).thenReturn(conn);
-    when(conn.isValid(anyInt())).thenReturn(false);
-
-    assertNull(pool.getConnection());
-  }
-
-  @Test
   public void getConnectionThrows() throws SQLException {
     when(dataSource.getPooledConnection()).thenThrow(TestUtil.getNormal());
 

@@ -59,7 +59,7 @@ final class Util {
   static void cleanupConnection(final Terminal xa, final Pooled<?> val, final SQLException ex)
       throws SQLException {
     if (ex != null) {
-      if (xa.getConfig().getExceptionHander().isConnectionErrorFatal(ex)) {
+      if (xa.getConfig().getExceptionHandler().isConnectionErrorFatal(ex)) {
         xa.kill(ex);
       } else {
         final SQLException ge = val.close(false);
@@ -75,7 +75,7 @@ final class Util {
 
   static <E extends SQLException> E handleStatementFatalSQL(
       final Terminal xa, final PreparedStatement statement, final E e) {
-    final ExceptionHandler exceptionHander = xa.getConfig().getExceptionHander();
+    final ExceptionHandler exceptionHander = xa.getConfig().getExceptionHandler();
     if (exceptionHander.isStatementErrorFatal(e)) {
       xa.evict(statement, e);
     }
@@ -83,7 +83,7 @@ final class Util {
   }
 
   static <E extends SQLException> E handleFatalSQL(final Terminal xa, final E e) {
-    if (xa.getConfig().getExceptionHander().isConnectionErrorFatal(e)) {
+    if (xa.getConfig().getExceptionHandler().isConnectionErrorFatal(e)) {
       xa.kill(e);
     }
     return e;
@@ -91,7 +91,7 @@ final class Util {
 
   static <E extends SQLException> E handleFatalSQL(final BasePool<?> pool, final E e) {
     try {
-      if (pool.getConfig().getExceptionHander().isConnectionErrorFatal(e)) {
+      if (pool.getConfig().getExceptionHandler().isConnectionErrorFatal(e)) {
         pool.close();
       }
     } catch (final Exception se) {
@@ -110,7 +110,7 @@ final class Util {
       final boolean newFatal;
       if (e instanceof SQLException) {
         se = (SQLException) e;
-        newFatal = config.getExceptionHander().isConnectionErrorFatal(se);
+        newFatal = config.getExceptionHandler().isConnectionErrorFatal(se);
       } else {
         se = new SQLException(e);
         // TODO Maybe but if its throwing something other than an SQLException this is probably

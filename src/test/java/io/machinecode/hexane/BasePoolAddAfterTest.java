@@ -20,8 +20,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.sql.Connection;
 import java.sql.SQLTransientConnectionException;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * This test simulates the refill task finishing after we poll
@@ -36,16 +41,24 @@ public class BasePoolAddAfterTest extends Assert {
 
   @Before
   public void setUp() throws Exception {
+    final Config config =
+        Hexane.builder()
+            .setMaintenanceExecutor(cmd -> task = cmd)
+            .setCorePoolSize(2)
+            .setMaxPoolSize(4)
+            .getConfig();
+    final Connection conn = mock(Connection.class);
+    when(conn.isValid(anyInt())).thenReturn(true);
     pool =
-        new BasePool<Integer>(
-            Hexane.builder()
-                .setMaintenanceExecutor(cmd -> task = cmd)
-                .setCorePoolSize(2)
-                .setMaxPoolSize(4)
-                .getConfig()) {
+        new BasePool<Integer>(config, Defaults.create(config, conn)) {
           @Override
           protected Integer getConnection() {
             return val.incrementAndGet();
+          }
+
+          @Override
+          protected Connection getConnection(final Integer item) {
+            return conn;
           }
 
           @Override

@@ -22,20 +22,17 @@ import javax.sql.XADataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLNonTransientException;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 public final class Config {
   static final int UNSET = -1;
-
-  private static final List<String> FATAL_PREFIXES =
-      Collections.singletonList(Util.CONNECTION_ERROR);
 
   static final HexaneListener NOOP_LISTENER = new HexaneListener() {};
   static final ExceptionHandler EXCEPTION_HANDLER = new ExceptionHandler() {};
@@ -51,6 +48,7 @@ public final class Config {
   private final String user;
   private final String password;
   private final Executor maintenanceExecutor;
+  private final AutoCloseable maintenanceExecutorClosable;
 
   private final Boolean autoCommit;
   private final Integer holdability;
@@ -63,9 +61,9 @@ public final class Config {
   private final Integer networkTimeout;
   private final Executor networkTimeoutExecutor;
 
-  private final boolean checkFatal;
-  private final LoggerType loggerType;
+  private final LoggerFactory loggerFactory;
   private final InternalListener listener;
+  private final boolean checkFatal;
   private final ExceptionHandler exceptionHandler;
 
   Config(final Builder builder) {
@@ -90,7 +88,15 @@ public final class Config {
     this.statementCacheSize = builder.statementCacheSize;
     this.user = builder.user;
     this.password = builder.password;
-    this.maintenanceExecutor = builder.maintenanceExecutor;
+    if (builder.maintenanceExecutor == null) {
+
+      final ExecutorService executor = Executors.newSingleThreadExecutor();
+      this.maintenanceExecutor = executor;
+      this.maintenanceExecutorClosable = executor::shutdown;
+    } else {
+      this.maintenanceExecutor = builder.maintenanceExecutor;
+      this.maintenanceExecutorClosable = null;
+    }
     this.autoCommit = builder.autoCommit;
     this.holdability = builder.holdability == null ? null : builder.holdability.value;
     this.readOnly = builder.readOnly;
@@ -101,15 +107,15 @@ public final class Config {
     this.typeMap = builder.typeMap;
     this.clientInfo = builder.clientInfo;
     this.networkTimeout = builder.networkTimeout;
-    this.networkTimeoutExecutor = builder.networkTimeoutExecutor;
+    this.networkTimeoutExecutor = Util.defaultIfNull(builder.networkTimeoutExecutor, Runnable::run);
+    this.loggerFactory = LoggerType.getFactory(builder.loggerType);
     this.checkFatal = builder.exceptionHandler != EXCEPTION_HANDLER;
-    this.loggerType = builder.loggerType;
+    this.exceptionHandler = builder.exceptionHandler;
     if (builder.listener == NOOP_LISTENER) {
       this.listener = InternalListener.INSTANCE;
     } else {
       this.listener = new DelegateInternalListener(builder.listener);
     }
-    this.exceptionHandler = builder.exceptionHandler;
   }
 
   long getConnectionTimeout() {
@@ -156,6 +162,10 @@ public final class Config {
     return maintenanceExecutor;
   }
 
+  AutoCloseable getMaintenanceExecutorClosable() {
+    return maintenanceExecutorClosable;
+  }
+
   Boolean isAutoCommit() {
     return autoCommit;
   }
@@ -196,19 +206,19 @@ public final class Config {
     return networkTimeoutExecutor;
   }
 
-  LoggerFactory getLoggerType() {
-    return LoggerType.getFactory(loggerType);
-  }
-
-  boolean isCheckFatal() {
-    return checkFatal;
+  LoggerFactory getLoggerFactory() {
+    return loggerFactory;
   }
 
   InternalListener getListener() {
     return listener;
   }
 
-  ExceptionHandler getExceptionHander() {
+  boolean isCheckFatal() {
+    return checkFatal;
+  }
+
+  ExceptionHandler getExceptionHandler() {
     return exceptionHandler;
   }
 
@@ -401,7 +411,7 @@ public final class Config {
       return new Config(this);
     }
 
-    public DataSource buildDataSource(final DataSource dataSource) throws SQLException {
+    public HexaneDataSource buildDataSource(final DataSource dataSource) throws SQLException {
       assertValid();
       final Config config = new Config(this);
       try (final Connection conn = dataSource.getConnection()) {
@@ -413,7 +423,7 @@ public final class Config {
       }
     }
 
-    public ConnectionPoolDataSource buildManagedDataSource(final DataSource dataSource)
+    public HexaneManagedDataSource buildManagedDataSource(final DataSource dataSource)
         throws SQLException {
       assertValid();
       final Config config = new Config(this);
@@ -426,7 +436,7 @@ public final class Config {
       }
     }
 
-    public ConnectionPoolDataSource buildConnectionPoolDataSource(
+    public HexaneConnectionPoolDataSource buildConnectionPoolDataSource(
         final ConnectionPoolDataSource dataSource) throws SQLException {
       assertValid();
       final Config config = new Config(this);

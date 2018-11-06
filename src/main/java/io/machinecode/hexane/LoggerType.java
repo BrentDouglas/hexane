@@ -19,7 +19,6 @@ package io.machinecode.hexane;
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 public enum LoggerType {
   NONE,
-  CONSOLE,
   JUL,
   LOG4J,
   SLF4J,
@@ -29,8 +28,6 @@ public enum LoggerType {
     switch (type) {
       case NONE:
         return LoggerFactory.NONE;
-      case CONSOLE:
-        return LoggerFactory.CONSOLE;
       case LOG4J:
         return LoggerFactory.LOG4J;
       case SLF4J:

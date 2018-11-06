@@ -24,7 +24,6 @@ import org.junit.Test;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.SQLFeatureNotSupportedException;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
@@ -46,18 +45,6 @@ public class HexaneDataSourceTest
         new HexanePool(
             Hexane.builder().setMaintenanceExecutor(Runnable::run).getConfig(), defaults, delegate);
     dataSource = new HexaneDataSource(pool, delegate, defaults);
-  }
-
-  @Test
-  public void getConnection() throws SQLException {
-    try (final Connection conn = dataSource.getConnection()) {
-      assertNotSame(value, conn);
-    }
-  }
-
-  @Test(expected = SQLFeatureNotSupportedException.class)
-  public void getConnectionUserNotSupported() throws SQLException {
-    dataSource.getConnection("any", null);
   }
 
   @Test

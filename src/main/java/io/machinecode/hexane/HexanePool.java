@@ -22,12 +22,10 @@ import java.sql.SQLException;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 final class HexanePool extends BasePool<Connection> {
-  private final Defaults defaults;
   private final DataSource dataSource;
 
   HexanePool(final Config config, final Defaults defaults, final DataSource dataSource) {
-    super(config, HexanePool.class);
-    this.defaults = defaults;
+    super(config, defaults, HexanePool.class);
     this.dataSource = dataSource;
     executor.execute(task);
   }
@@ -42,15 +40,16 @@ final class HexanePool extends BasePool<Connection> {
       } else {
         conn = dataSource.getConnection(user, config.getPassword());
       }
-      if (!conn.isValid(config.getValidationTimeout())) {
-        return null;
-      }
-      defaults.initialize(conn);
       return conn;
     } catch (final SQLException e) {
       error(Msg.EXCEPTION_OPENING_CONNECTION, Util.close(conn, e));
       return null;
     }
+  }
+
+  @Override
+  protected Connection getConnection(final Connection item) {
+    return item;
   }
 
   @Override

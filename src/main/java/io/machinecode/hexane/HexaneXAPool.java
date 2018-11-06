@@ -29,7 +29,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 final class HexaneXAPool extends BasePool<XAConnection> {
-  private final Defaults defaults;
   private final XADataSource dataSource;
   private final Map<Pooled<XAConnection>, ConnectionEventListener> connectionListeners =
       new ConcurrentHashMap<>();
@@ -37,8 +36,7 @@ final class HexaneXAPool extends BasePool<XAConnection> {
       new ConcurrentHashMap<>();
 
   HexaneXAPool(final Config config, final Defaults defaults, final XADataSource dataSource) {
-    super(config, HexaneXAPool.class);
-    this.defaults = defaults;
+    super(config, defaults, HexaneXAPool.class);
     this.dataSource = dataSource;
     executor.execute(task);
   }
@@ -93,14 +91,19 @@ final class HexaneXAPool extends BasePool<XAConnection> {
       } else {
         xa = dataSource.getXAConnection(user, config.getPassword());
       }
-      conn = xa.getConnection();
-      if (!conn.isValid(config.getValidationTimeout())) {
-        return null;
-      }
-      defaults.initialize(conn);
       return xa;
     } catch (final SQLException e) {
       error(Msg.EXCEPTION_OPENING_CONNECTION, Util.close(conn, e));
+      return null;
+    }
+  }
+
+  @Override
+  protected Connection getConnection(final XAConnection item) {
+    try {
+      return item.getConnection();
+    } catch (final SQLException e) {
+      error(Msg.EXCEPTION_OPENING_CONNECTION, e);
       return null;
     }
   }

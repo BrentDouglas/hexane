@@ -56,8 +56,7 @@ final class Defaults {
   }
 
   static Defaults create(final Config config, final Connection conn) throws SQLException {
-    final Executor networkTimeoutExecutor =
-        Util.defaultIfNull(config.getNetworkTimeoutExecutor(), Runnable::run);
+    final Executor networkTimeoutExecutor = config.getNetworkTimeoutExecutor();
     int supported = 0;
 
     boolean autoCommit = false;

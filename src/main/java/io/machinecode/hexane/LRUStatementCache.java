@@ -215,7 +215,7 @@ final class LRUStatementCache extends StatementCache {
             Config.UNSET,
             null,
             null);
-    CallableStatement statement = CallableStatement.class.cast(this.cache.get(key));
+    CallableStatement statement = (CallableStatement) this.cache.get(key);
     if (statement == null) {
       statement = conn.prepareCall(sql);
       this.cache.put(key, statement);
@@ -241,7 +241,7 @@ final class LRUStatementCache extends StatementCache {
             Config.UNSET,
             null,
             null);
-    CallableStatement statement = CallableStatement.class.cast(this.cache.get(key));
+    CallableStatement statement = (CallableStatement) this.cache.get(key);
     if (statement == null) {
       statement = conn.prepareCall(sql, resultSetType, resultSetConcurrency);
       this.cache.put(key, statement);
@@ -271,7 +271,7 @@ final class LRUStatementCache extends StatementCache {
             Config.UNSET,
             null,
             null);
-    CallableStatement statement = CallableStatement.class.cast(this.cache.get(key));
+    CallableStatement statement = (CallableStatement) this.cache.get(key);
     if (statement == null) {
       statement = conn.prepareCall(sql, resultSetType, resultSetConcurrency, resultSetHoldability);
       this.cache.put(key, statement);

@@ -16,6 +16,7 @@
  */
 package io.machinecode.hexane;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLNonTransientException;
 import java.sql.SQLTransientConnectionException;
@@ -24,8 +25,6 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -40,22 +39,21 @@ abstract class BasePool<C> implements AutoCloseable {
   private final AtomicInteger total = new AtomicInteger();
   private final Logger log;
   final Config config;
+  final Defaults defaults;
   final Executor executor;
   final Runnable task = this::refill;
   private volatile int state;
 
-  BasePool(final Config config) {
-    this(config, BasePool.class);
+  BasePool(final Config config, final Defaults defaults) {
+    this(config, defaults, BasePool.class);
   }
 
-  BasePool(final Config config, final Class<?> clazz) {
+  BasePool(final Config config, final Defaults defaults, final Class<?> clazz) {
     this.config = config;
+    this.defaults = defaults;
     this.free = new LinkedBlockingQueue<>(config.getMaxPoolSize());
-    this.executor =
-        config.getMaintenanceExecutor() == null
-            ? Executors.newSingleThreadExecutor()
-            : config.getMaintenanceExecutor();
-    this.log = config.getLoggerType().getLogger(clazz);
+    this.executor = config.getMaintenanceExecutor();
+    this.log = config.getLoggerFactory().getLogger(clazz);
   }
 
   Config getConfig() {
@@ -128,10 +126,9 @@ abstract class BasePool<C> implements AutoCloseable {
     }
     closeRegistered();
     listeners.onDataSourceClosed();
-    if (executor instanceof AutoCloseable) {
-      exception = Util.close((AutoCloseable) executor, exception);
-    } else if (executor instanceof ExecutorService) {
-      exception = Util.close(((ExecutorService) executor)::shutdown, exception);
+    final AutoCloseable closeable = config.getMaintenanceExecutorClosable();
+    if (closeable != null) {
+      exception = Util.close(closeable, exception);
     }
     if (exception != null) {
       throw exception;
@@ -162,16 +159,28 @@ abstract class BasePool<C> implements AutoCloseable {
   }
 
   void addNew(int total, final int limit, final long start) {
-    final C conn = getConnection();
+    final C value = getConnection();
+    if (value == null) {
+      return;
+    }
+    final AutoCloseable close = getCloser(value);
+    final Connection conn = getConnection(value);
     if (conn == null) {
       return;
     }
-    final AutoCloseable close = getCloser(conn);
+    try {
+      if (!conn.isValid(config.getValidationTimeout())) {
+        return;
+      }
+      defaults.initialize(conn);
+    } catch (final SQLException e) {
+      return;
+    }
     final int cacheSize = config.getStatementCacheSize();
     final InternalListener listener = config.getListener();
     final StatementCache cache =
         cacheSize > 0 ? new LRUStatementCache(cacheSize, listener) : StatementCache.INSTANCE;
-    final Pooled<C> item = new Pooled<>(this, conn, close, cache);
+    final Pooled<C> item = new Pooled<>(this, value, conn, close, cache);
     boolean add = false;
     do {
       if (this.total.compareAndSet(total, total + 1)) {
@@ -240,6 +249,8 @@ abstract class BasePool<C> implements AutoCloseable {
   protected void closeRegistered() {}
 
   protected abstract C getConnection();
+
+  protected abstract Connection getConnection(final C item);
 
   protected abstract AutoCloseable getCloser(final C item);
 

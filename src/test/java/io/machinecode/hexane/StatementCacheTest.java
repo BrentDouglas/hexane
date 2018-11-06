@@ -127,7 +127,8 @@ public class StatementCacheTest extends Assert {
     assertEquals(0, hits);
     assertEquals(1, misses);
     final PreparedStatement b =
-        cache.prepareStatement(conn, sql, resultSetType, resultSetConcurrency);
+        cache.prepareStatement(
+            conn, sql, resultSetType, resultSetConcurrency, resultSetHoldability);
     assertEquals(1, hits);
     assertEquals(1, misses);
     assertEquals(a, b);

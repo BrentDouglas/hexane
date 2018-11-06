@@ -19,7 +19,6 @@ package io.machinecode.hexane;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.SQLFeatureNotSupportedException;
 
 /**
  * A datasource backed by a {@link DataSource} that pools {@link Connection}'s.
@@ -39,11 +38,6 @@ public final class HexaneDataSource extends BaseDataSource<Connection, HexanePoo
   public Connection getConnection() throws SQLException {
     final Pooled<Connection> val = pool.take();
     return new HexaneConnection(pool.getConfig(), val, defaults);
-  }
-
-  @Override
-  public Connection getConnection(final String user, final String password) throws SQLException {
-    throw new SQLFeatureNotSupportedException();
   }
 
   @Override

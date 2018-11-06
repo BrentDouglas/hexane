@@ -21,7 +21,6 @@ import org.junit.Test;
 
 import javax.sql.XAConnection;
 import javax.transaction.xa.XAResource;
-import java.sql.SQLException;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -39,7 +38,7 @@ public class HexaneXAConnectionTest
     resource = mock(XAResource.class);
     when(delegate.getConnection()).thenReturn(real);
     when(delegate.getXAResource()).thenReturn(resource);
-    pooled = new Pooled<>(pool, delegate, close, StatementCache.INSTANCE);
+    pooled = new Pooled<>(pool, delegate, real, close, StatementCache.INSTANCE);
     conn = new HexaneXAConnection(config, pooled, defaults);
   }
 
@@ -48,25 +47,5 @@ public class HexaneXAConnectionTest
     final XAResource resource = conn.getXAResource();
 
     assertSame(this.resource, resource);
-  }
-
-  @Test
-  public void getConnectionFatalRemoves() throws Exception {
-    conn =
-        new HexaneXAConnection(
-            Hexane.builder()
-                .setExceptionHandler(
-                    new ExceptionHandler() {
-                      @Override
-                      public boolean isConnectionErrorFatal(final SQLException e) {
-                        return e.getSQLState() == null
-                            || e.getSQLState().startsWith(Util.CONNECTION_ERROR);
-                      }
-                    })
-                .getConfig(),
-            pooled,
-            defaults);
-
-    super.getConnectionFatalRemoves();
   }
 }

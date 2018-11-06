@@ -18,6 +18,7 @@ package io.machinecode.hexane;
 
 import javax.sql.XAConnection;
 import javax.sql.XADataSource;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 
@@ -26,7 +27,8 @@ import java.sql.SQLFeatureNotSupportedException;
  *
  * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
  */
-public final class HexaneXADataSource extends BaseDataSource<XAConnection, HexaneXAPool, XADataSource>
+public final class HexaneXADataSource
+    extends BaseDataSource<XAConnection, HexaneXAPool, XADataSource>
     implements XADataSource, AutoCloseable {
   private final Defaults defaults;
 
@@ -46,5 +48,10 @@ public final class HexaneXADataSource extends BaseDataSource<XAConnection, Hexan
   public XAConnection getXAConnection(final String user, final String password)
       throws SQLException {
     throw new SQLFeatureNotSupportedException();
+  }
+
+  @Override
+  public Connection getConnection() throws SQLException {
+    return getXAConnection().getConnection();
   }
 }

@@ -50,7 +50,7 @@ public class HexaneManagedConnectionTest extends Assert {
     when(pool.getConfig()).thenReturn(config);
     close = mock(AutoCloseable.class);
     real = mock(Connection.class);
-    pooled = new Pooled<>(pool, real, close, StatementCache.INSTANCE);
+    pooled = new Pooled<>(pool, real, real, close, StatementCache.INSTANCE);
     conn = new HexaneManagedConnection(config, pooled, new Defaults.Builder().build());
   }
 

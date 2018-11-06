@@ -17,10 +17,8 @@
 package io.machinecode.hexane;
 
 import org.junit.Before;
-import org.junit.Test;
 
 import javax.sql.PooledConnection;
-import java.sql.SQLException;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -34,27 +32,7 @@ public class HexanePooledConnectionTest
     super.setUp();
     delegate = mock(PooledConnection.class);
     when(delegate.getConnection()).thenReturn(real);
-    pooled = new Pooled<>(pool, delegate, close, StatementCache.INSTANCE);
+    pooled = new Pooled<>(pool, delegate, real, close, StatementCache.INSTANCE);
     conn = new HexanePooledConnection(config, pooled, defaults);
-  }
-
-  @Test
-  public void getConnectionFatalRemoves() throws Exception {
-    conn =
-        new HexanePooledConnection(
-            Hexane.builder()
-                .setExceptionHandler(
-                    new ExceptionHandler() {
-                      @Override
-                      public boolean isConnectionErrorFatal(final SQLException e) {
-                        return e.getSQLState() == null
-                            || e.getSQLState().startsWith(Util.CONNECTION_ERROR);
-                      }
-                    })
-                .getConfig(),
-            pooled,
-            defaults);
-
-    super.getConnectionFatalRemoves();
   }
 }

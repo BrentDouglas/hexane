@@ -43,7 +43,9 @@ public class CheckedConnectionTest extends CheckedTestBase<Connection, CheckedCo
     when(pool.getConfig()).thenReturn(config);
     return new CheckedConnection(
         terminal,
-        pooled = new Pooled<>(pool, delegate, mock(AutoCloseable.class), StatementCache.INSTANCE),
+        pooled =
+            new Pooled<>(
+                pool, delegate, delegate, mock(AutoCloseable.class), StatementCache.INSTANCE),
         delegate,
         defaults);
   }

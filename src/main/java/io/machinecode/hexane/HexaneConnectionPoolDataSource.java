@@ -18,6 +18,7 @@ package io.machinecode.hexane;
 
 import javax.sql.ConnectionPoolDataSource;
 import javax.sql.PooledConnection;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 
@@ -49,5 +50,10 @@ public final class HexaneConnectionPoolDataSource
   public PooledConnection getPooledConnection(final String user, final String password)
       throws SQLException {
     throw new SQLFeatureNotSupportedException();
+  }
+
+  @Override
+  public Connection getConnection() throws SQLException {
+    return getPooledConnection().getConnection();
   }
 }

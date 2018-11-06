@@ -43,7 +43,9 @@ public class UncheckedConnectionTest extends UncheckedTestBase<Connection, Unche
     when(pool.getConfig()).thenReturn(config);
     return new UncheckedConnection(
         terminal,
-        pooled = new Pooled<>(pool, delegate, mock(AutoCloseable.class), StatementCache.INSTANCE),
+        pooled =
+            new Pooled<>(
+                pool, delegate, delegate, mock(AutoCloseable.class), StatementCache.INSTANCE),
         delegate,
         defaults);
   }

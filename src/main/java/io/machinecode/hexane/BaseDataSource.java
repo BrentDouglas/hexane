@@ -17,16 +17,19 @@
 package io.machinecode.hexane;
 
 import javax.sql.CommonDataSource;
+import javax.sql.DataSource;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
+import java.sql.Wrapper;
 import java.util.logging.Logger;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 abstract class BaseDataSource<C, P extends BasePool<C>, D extends CommonDataSource>
-    implements CommonDataSource, AutoCloseable {
-  protected P pool;
-  protected final D dataSource;
+    implements CommonDataSource, DataSource, AutoCloseable {
+  P pool;
+  final D dataSource;
 
   BaseDataSource(final P pool, final D dataSource) {
     this.pool = pool;
@@ -81,5 +84,29 @@ abstract class BaseDataSource<C, P extends BasePool<C>, D extends CommonDataSour
   @Override
   public void close() throws SQLException {
     this.pool.close();
+  }
+
+  @Override
+  public Connection getConnection(final String username, final String password)
+      throws SQLException {
+    throw new SQLFeatureNotSupportedException();
+  }
+
+  @Override
+  public <T> T unwrap(final Class<T> iface) throws SQLException {
+    try {
+      return dataSource instanceof Wrapper ? Util.unwrap(iface, this, (Wrapper) dataSource) : null;
+    } catch (final SQLException e) {
+      throw Util.handleFatalSQL(pool, e);
+    }
+  }
+
+  @Override
+  public boolean isWrapperFor(final Class<?> iface) throws SQLException {
+    try {
+      return dataSource instanceof Wrapper && Util.isWrapperFor(iface, this, (Wrapper) dataSource);
+    } catch (final SQLException e) {
+      throw Util.handleFatalSQL(pool, e);
+    }
   }
 }

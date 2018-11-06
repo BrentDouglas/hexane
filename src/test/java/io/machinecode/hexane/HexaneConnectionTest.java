@@ -45,7 +45,9 @@ public class HexaneConnectionTest extends CheckedTestBase<Connection, HexaneConn
     when(pool.getConfig()).thenReturn(config);
     return new HexaneConnection(
         Hexane.builder().getConfig(),
-        pooled = new Pooled<>(pool, delegate, mock(AutoCloseable.class), StatementCache.INSTANCE),
+        pooled =
+            new Pooled<>(
+                pool, delegate, delegate, mock(AutoCloseable.class), StatementCache.INSTANCE),
         defaults);
   }
 

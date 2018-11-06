@@ -22,7 +22,9 @@ import org.junit.Test;
 
 import javax.sql.CommonDataSource;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
 
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -42,6 +44,18 @@ public abstract class CommonDataSourceTestBase<
   @After
   public void tearDown() throws SQLException {
     pool.close();
+  }
+
+  @Test
+  public void getConnection() throws SQLException {
+    try (final Connection conn = dataSource.getConnection()) {
+      assertNotSame(value, conn);
+    }
+  }
+
+  @Test(expected = SQLFeatureNotSupportedException.class)
+  public void getConnectionUserNotSupported() throws SQLException {
+    dataSource.getConnection("any", null);
   }
 
   @Test

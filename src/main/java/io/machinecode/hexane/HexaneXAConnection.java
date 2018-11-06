@@ -92,13 +92,9 @@ final class HexaneXAConnection extends Terminal implements XAConnection {
       throw new SQLNonTransientException(Msg.CONNECTION_CLOSED);
     }
     if (config.isCheckFatal()) {
-      try {
-        return new CheckedConnection(this, val, delegate.getConnection(), defaults);
-      } catch (final SQLException e) {
-        throw Util.handleFatalSQL(this, e);
-      }
+      return new CheckedConnection(this, val, val.getConnection(), defaults);
     } else {
-      return new UncheckedConnection(this, val, delegate.getConnection(), defaults);
+      return new UncheckedConnection(this, val, val.getConnection(), defaults);
     }
   }
 

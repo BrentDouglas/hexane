@@ -45,35 +45,6 @@ abstract class LoggerFactory {
         }
       };
 
-  static final Logger CONSOLE_LOGGER =
-      new Logger() {
-        @Override
-        public void info(final String msg) {
-          System.out.print(msg);
-        }
-
-        @Override
-        public void warn(final String msg, final Throwable e) {
-          System.out.print(msg);
-          System.out.print(": ");
-          e.printStackTrace(System.out);
-        }
-
-        @Override
-        public void error(final String msg, final Throwable e) {
-          System.err.print(msg);
-          System.err.print(": ");
-          e.printStackTrace(System.err);
-        }
-      };
-  static final LoggerFactory CONSOLE =
-      new LoggerFactory() {
-        @Override
-        Logger getLogger(final Class<?> clazz) {
-          return CONSOLE_LOGGER;
-        }
-      };
-
   static final LoggerFactory JUL =
       new LoggerFactory() {
         @Override

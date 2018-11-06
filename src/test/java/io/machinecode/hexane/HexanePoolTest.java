@@ -41,33 +41,28 @@ public class HexanePoolTest extends Assert {
   public void setUp() throws Exception {
     dataSource = mock(DataSource.class);
     conn = mock(Connection.class);
+    when(conn.isValid(anyInt())).thenReturn(true);
     defaults = new Defaults.Builder().build();
-    pool = new HexanePool(Hexane.builder().setUser(user).getConfig(), defaults, dataSource);
+    pool =
+        new HexanePool(
+            Hexane.builder().setUser(user).setMaintenanceExecutor(it -> {}).getConfig(),
+            defaults,
+            dataSource);
   }
 
   @Test
   public void getConnection() throws SQLException {
     when(dataSource.getConnection()).thenReturn(conn);
-    when(conn.isValid(anyInt())).thenReturn(true);
 
     assertNotNull(pool.getConnection());
   }
 
   @Test
   public void getConnectionUser() throws SQLException {
-    pool = new HexanePool(Hexane.builder().setUser("test").getConfig(), defaults, dataSource);
     when(dataSource.getConnection("test", null)).thenReturn(conn);
-    when(conn.isValid(anyInt())).thenReturn(true);
+    pool = new HexanePool(Hexane.builder().setUser("test").getConfig(), defaults, dataSource);
 
     assertNotNull(pool.getConnection());
-  }
-
-  @Test
-  public void getConnectionInvalid() throws SQLException {
-    when(dataSource.getConnection()).thenReturn(conn);
-    when(conn.isValid(anyInt())).thenReturn(false);
-
-    assertNull(pool.getConnection());
   }
 
   @Test

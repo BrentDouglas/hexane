@@ -16,17 +16,17 @@
  */
 package io.machinecode.hexane;
 
+import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.IdentityHashMap;
-import java.util.List;
 import java.util.Set;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 final class Pooled<T> implements AutoCloseable {
   private final BasePool<T> pool;
   private final T value;
+  private final Connection connection;
   private final AutoCloseable close;
   private final Set<AutoCloseable> enlisted;
   private final StatementCache cache;
@@ -36,9 +36,15 @@ final class Pooled<T> implements AutoCloseable {
   private volatile boolean expired;
   private volatile boolean broken = false;
 
-  Pooled(final BasePool<T> pool, final T value, final AutoCloseable close, final StatementCache cache) {
+  Pooled(
+      final BasePool<T> pool,
+      final T value,
+      final Connection connection,
+      final AutoCloseable close,
+      final StatementCache cache) {
     this.pool = pool;
     this.value = value;
+    this.connection = connection;
     this.close = close;
     this.created = Clock.getCurrentTime();
     this.enlisted = Collections.newSetFromMap(new IdentityHashMap<>());
@@ -47,6 +53,10 @@ final class Pooled<T> implements AutoCloseable {
 
   T getValue() {
     return value;
+  }
+
+  Connection getConnection() {
+    return connection;
   }
 
   void enlist(final AutoCloseable it) {

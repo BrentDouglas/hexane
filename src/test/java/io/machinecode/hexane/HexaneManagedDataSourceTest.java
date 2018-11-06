@@ -17,6 +17,7 @@
 package io.machinecode.hexane;
 
 import io.machinecode.hexane.Defaults.Builder;
+import org.h2.jdbcx.JdbcDataSource;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,6 +27,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -45,6 +47,48 @@ public class HexaneManagedDataSourceTest
         new HexanePool(
             Hexane.builder().setMaintenanceExecutor(Runnable::run).getConfig(), defaults, delegate);
     dataSource = new HexaneManagedDataSource(pool, delegate, defaults);
+  }
+
+  @Test
+  public void isWrapperFor() throws SQLException {
+    assertTrue(dataSource.isWrapperFor(DataSource.class));
+    assertTrue(dataSource.isWrapperFor(HexaneManagedDataSource.class));
+
+    when(delegate.isWrapperFor(any())).thenReturn(true);
+
+    assertTrue(delegate.isWrapperFor(JdbcDataSource.class));
+  }
+
+  @Test
+  public void unwrap() throws SQLException {
+    assertEquals(dataSource, dataSource.unwrap(DataSource.class));
+    assertEquals(dataSource, dataSource.unwrap(HexaneManagedDataSource.class));
+
+    when(delegate.unwrap(any())).thenReturn(delegate);
+
+    assertEquals(delegate, dataSource.unwrap(JdbcDataSource.class));
+  }
+
+  @Test
+  public void isWrapperForFatalCallsKill() throws SQLException {
+    when(delegate.isWrapperFor(any())).thenThrow(TestUtil.getFatalState());
+    try {
+      dataSource.isWrapperFor(JdbcDataSource.class);
+      fail();
+    } catch (final SQLException e) {
+      assertTrue(pool.isClosed());
+    }
+  }
+
+  @Test
+  public void unwrapFatalCallsKill() throws SQLException {
+    when(delegate.unwrap(any())).thenThrow(TestUtil.getFatalState());
+    try {
+      dataSource.unwrap(JdbcDataSource.class);
+      fail();
+    } catch (final SQLException e) {
+      assertTrue(pool.isClosed());
+    }
   }
 
   @Test

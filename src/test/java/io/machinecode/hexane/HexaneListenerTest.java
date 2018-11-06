@@ -29,6 +29,7 @@ import javax.sql.XADataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -49,6 +50,7 @@ public class HexaneListenerTest extends Assert {
     FixedClock.setTime(0);
     Clock.INSTANCE = new FixedClock();
     conn = mock(Connection.class);
+    when(conn.isValid(anyInt())).thenReturn(true);
     closer = mock(AutoCloseable.class);
     builder =
         Hexane.builder()
@@ -62,10 +64,15 @@ public class HexaneListenerTest extends Assert {
             .setLifetimeTimeout(200, Clock.getUnit());
     config = builder.getConfig();
     pool =
-        new BasePool<Connection>(config) {
+        new BasePool<Connection>(config, Defaults.create(config, conn)) {
           @Override
           protected Connection getConnection() {
             return conn;
+          }
+
+          @Override
+          protected Connection getConnection(final Connection item) {
+            return item;
           }
 
           @Override

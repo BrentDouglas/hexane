@@ -54,7 +54,12 @@ public class ClosedXAConnectionTest extends Assert {
   }
 
   @Test(expected = SQLException.class)
-  public void anythingElseThrows() throws SQLException {
+  public void getConnectionThrows() throws SQLException {
     ClosedXAConnection.INSTANCE.getConnection();
+  }
+
+  @Test(expected = SQLException.class)
+  public void getXAResourceThrows() throws SQLException {
+    ClosedXAConnection.INSTANCE.getXAResource();
   }
 }
