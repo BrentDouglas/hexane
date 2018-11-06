@@ -16,6 +16,7 @@ coverage_html(
     name = "coverage",
     srcs = [
         "//src/main/java/io/machinecode/hexane:srcs",
+        "//src/main/java/io/machinecode/hexane/ext/spring:srcs",
     ],
     data = [
         "//:coverage_data",
@@ -26,7 +27,8 @@ coverage_html(
 java_doc(
     name = "javadoc",
     libs = [
-        "//src/main/java/io/machinecode/hexane:hexane",
+        "//src/main/java/io/machinecode/hexane",
+        "//src/main/java/io/machinecode/hexane/ext/spring",
     ],
     pkgs = [
         "io.machinecode.hexane",

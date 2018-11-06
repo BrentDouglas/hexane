@@ -100,3 +100,7 @@ database_repositories()
 load("//tools/include:pool_repositories.bzl", "pool_repositories")
 
 pool_repositories()
+
+load("//tools/include:spring_repositories.bzl", "spring_repositories")
+
+spring_repositories()

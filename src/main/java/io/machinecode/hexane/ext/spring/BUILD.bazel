@@ -1,0 +1,17 @@
+load("//:deps.bzl", "build_deps")
+load(":deps.bzl", "spring_deps")
+
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "srcs",
+    srcs = glob(["*.java"]),
+)
+
+java_library(
+    name = "spring",
+    srcs = [":srcs"],
+    deps = build_deps + spring_deps + [
+        "//src/main/java/io/machinecode/hexane",
+    ],
+)

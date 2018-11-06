@@ -1,0 +1,97 @@
+load("//:deps.bzl", "build_deps", "test_deps")
+load("//src/main/java/io/machinecode/hexane/ext/spring:deps.bzl", "spring_deps")
+
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "srcs",
+    srcs = glob(
+        include = ["*.java"],
+        exclude = ["*Test.java"],
+    ),
+)
+
+all_deps = build_deps + test_deps + spring_deps + [
+    "//src/main/java/io/machinecode/hexane",
+    "//src/main/java/io/machinecode/hexane/ext/spring",
+] + [
+    "@org_hsqldb_hsqldb//jar",
+    "@javax_inject_javax_inject//jar",
+    "@org_springframework_boot_spring_boot_test//jar",
+    "@org_springframework_spring_test//jar",
+]
+
+java_library(
+    name = "spring",
+    srcs = [":srcs"],
+    deps = all_deps,
+)
+
+atomikos_deps = [
+    "@com_atomikos_atomikos_util//jar",
+    "@com_atomikos_transactions//jar",
+    "@com_atomikos_transactions_api//jar",
+    "@com_atomikos_transactions_jms//jar",
+    "@com_atomikos_transactions_jta//jar",
+    "@com_atomikos_transactions_jdbc//jar",
+]
+
+[
+    java_test(
+        name = test[:-9] + "AtomikosTest",
+        srcs = [test],
+        test_class = "io.machinecode.hexane.ext.spring." + test[:-5],
+        runtime_deps = [
+            "@org_hsqldb_hsqldb//jar",
+            "@org_springframework_spring_jcl//jar",
+            "@org_springframework_spring_jdbc//jar",
+            "@org_springframework_spring_tx//jar",
+        ],
+        #        jvm_flags = ["'%s'" % it for it in database_properties] + [
+        #            "'-Dcom.google.testing.junit.runner.shouldInstallTestSecurityManager=false'",
+        #        ],
+        deps = all_deps + atomikos_deps + [
+            "//src/test/java/io/machinecode/hexane/ext/spring",
+        ],
+    )
+    for test in glob(["*Test.java"])
+]
+
+[
+    java_test(
+        name = test[:-9] + "AtomikosJndiTest",
+        srcs = [test],
+        jvm_flags = [
+            "'-Dspring.datasource.hexane.jndi-name=java:/DataSource'",
+        ],
+        test_class = "io.machinecode.hexane.ext.spring." + test[:-5],
+        runtime_deps = [
+            "@org_springframework_spring_jcl//jar",
+            "@org_springframework_spring_jdbc//jar",
+            "@org_springframework_spring_tx//jar",
+        ],
+        deps = all_deps + atomikos_deps + [
+            "//src/test/java/io/machinecode/hexane/ext/spring",
+        ],
+    )
+    for test in glob(["*Test.java"])
+]
+
+[
+    java_test(
+        name = test[:-9] + "BitronixTest",
+        srcs = [test],
+        test_class = "io.machinecode.hexane.ext.spring." + test[:-5],
+        runtime_deps = [
+            "@org_hsqldb_hsqldb//jar",
+            "@org_springframework_spring_jcl//jar",
+            "@org_springframework_spring_jdbc//jar",
+            "@org_springframework_spring_tx//jar",
+        ],
+        deps = all_deps + [
+            "@org_codehaus_btm_btm//jar",
+            "//src/test/java/io/machinecode/hexane/ext/spring",
+        ],
+    )
+    for test in glob(["*Test.java"])
+]
