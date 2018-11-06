@@ -31,7 +31,9 @@ doc_to_html(
     },
     dest = "docs",
     imagesdir = "img",
-    resources = [":resources"],
+    resources = [
+        ":resources",
+    ],
 )
 
 doc_to_pdf(
@@ -49,19 +51,5 @@ doc_to_pdf(
     imagesdir = "img",
     resources = [
         ":resources",
-    ],
-)
-
-pkg_tar(
-    name = "adoc",
-    srcs = [
-        "index.html",
-    ],
-    mode = "0644",
-    package_dir = "/doc",
-    deps = [
-        ":html",
-        ":pdf",
-        "//:javadoc",
     ],
 )

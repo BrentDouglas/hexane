@@ -21,6 +21,7 @@ help:
 	@echo "   build                      - Build the library"
 	@echo "   test                       - Run the tests"
 	@echo "   coverage                   - Get test coverage"
+	@echo "   doc                        - Build the docs"
 	@echo ""
 
 
@@ -39,17 +40,29 @@ build:
 
 .PHONY: test
 test:
-	@bazel test //src/test/java/io/machinecode/hexane:all \
+	@bazel test //...:all \
 		$(args)
 
 .PHONY: coverage
 coverage:
 	@find bazel-out -name coverage.dat -exec rm {} +
-	@bazel coverage //src/test/java/io/machinecode/hexane:all \
+	@bazel coverage //src/test/java/io/machinecode/hexane/...:all \
 		$(args)
 	@bazel build //:coverage \
 		$(args)
 	@mkdir -p .cov
 	@rm -rf .cov && mkdir -p .cov
-	@bash -c "(cd .cov && tar xf ../bazel-bin/coverage.tar)"
+	@bash -c "(cd .cov && tar xf $(BAZEL_BIN)/coverage.tar)"
 	@$(open) .cov/index.html
+
+.PHONY: doc
+doc:
+	@bazel build //:site \
+		$(args)
+
+.PHONY: site
+site: doc
+	@mkdir -p .srv
+	@rm -rf .srv && mkdir -p .srv
+	@bash -c "(cd .srv && tar zxf $(BAZEL_BIN)/site.tar.gz)"
+	@$(open) .srv/docs/index.html

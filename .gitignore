@@ -2,6 +2,8 @@
 bazel-*
 .ijwb
 .cov
+.srv
+.userbazelrc
 
 # Maven
 target

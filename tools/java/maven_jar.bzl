@@ -177,7 +177,7 @@ maven_jar = repository_rule(
         "sha1": attr.string(),
         "src_sha1": attr.string(),
         "src_name": attr.string(default = "sources"),
-        "_download_script": attr.label(default = Label("//tools/gerrit:download_file.py")),
+        "_download_script": attr.label(default = Label("//tools/java:download_file.py")),
         "repository": attr.string(default = MAVEN_CENTRAL),
         "attach_source": attr.bool(default = True),
         "unsign": attr.bool(default = False),

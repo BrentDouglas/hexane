@@ -1,4 +1,22 @@
+load("@bazel_skylib//:skylark_library.bzl", "skylark_library")
+load("@io_bazel_skydoc//skylark:skylark.bzl", "skylark_doc")
+
 package(default_visibility = ["//visibility:public"])
+
+skylark_library(
+    name = "rules",
+    srcs = glob(["**/*.bzl"]),
+    deps = ["//tools/java"],
+)
+
+skylark_doc(
+    name = "docs",
+    format = "html",
+    site_root = "/rules",
+    srcs = [
+        ":rules",
+    ],
+)
 
 java_library(
     name = "jmh",

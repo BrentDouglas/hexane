@@ -1,5 +1,6 @@
 load("//tools:coverage.bzl", "coverage_html")
-load("//tools/gerrit:java_doc.bzl", "java_doc")
+load("//tools:util.bzl", "to_tar")
+load("//tools/java:java_doc.bzl", "java_doc")
 load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
 
 package(default_visibility = ["//visibility:public"])
@@ -19,11 +20,11 @@ coverage_html(
     data = [
         "//:coverage_data",
     ],
+    tags = ["manual"],
 )
 
 java_doc(
     name = "javadoc",
-    dest = "javadoc",
     libs = [
         "//src/main/java/io/machinecode/hexane:hexane",
     ],
@@ -33,11 +34,24 @@ java_doc(
     title = "Hexane",
 )
 
+to_tar(
+    name = "javadoc-tar",
+    srcs = [":javadoc"],
+    dir = "javadoc",
+)
+
+to_tar(
+    name = "rules-tar",
+    srcs = ["//tools:docs"],
+    dir = "rules",
+)
+
 pkg_tar(
     name = "site",
     extension = "tar.gz",
     deps = [
-        ":javadoc",
+        ":javadoc-tar",
+        ":rules-tar",
         "//src/main/adoc:html",
         "//src/main/adoc:pdf",
     ],
