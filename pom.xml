@@ -208,6 +208,7 @@
                         <test.db.pg_9_5.url>jdbc:postgresql://127.0.0.1:20095/hexane</test.db.pg_9_5.url>
                         <test.db.pg_9_6.url>jdbc:postgresql://127.0.0.1:20096/hexane</test.db.pg_9_6.url>
                         <test.db.pg_10_5.url>jdbc:postgresql://127.0.0.1:20105/hexane</test.db.pg_10_5.url>
+                        <test.db.pg_11_0.url>jdbc:postgresql://127.0.0.1:20110/hexane</test.db.pg_11_0.url>
                         <test.db.pg.user>hexane</test.db.pg.user>
                         <test.db.pg.password>hexane</test.db.pg.password>
                     </systemPropertyVariables>

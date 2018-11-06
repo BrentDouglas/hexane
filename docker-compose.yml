@@ -126,3 +126,11 @@ services:
       - POSTGRES_DB=hexane
     ports:
       - "20105:5432"
+  postgresql_11_0:
+    image: postgres:11.0
+    environment:
+    - POSTGRES_USER=hexane
+    - POSTGRES_PASSWORD=hexane
+    - POSTGRES_DB=hexane
+    ports:
+    - "20110:5432"
