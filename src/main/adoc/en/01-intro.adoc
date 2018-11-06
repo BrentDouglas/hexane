@@ -1,1 +1,4 @@
 ==  Introduction
+
+Hexane is an XA capable connection pool capable of wrapping both pooled and
+non-pooled data sources provided by the driver.

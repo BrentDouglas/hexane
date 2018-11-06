@@ -3,6 +3,7 @@
 :toc:
 :imagesdir: ./img
 :numbered:
+:last-update-label!:
 
 <<<<
 include::01-intro.adoc[]
