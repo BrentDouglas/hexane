@@ -25,7 +25,7 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -34,7 +34,7 @@ abstract class BasePool<C> implements AutoCloseable {
   static final int STATE_OK = 0;
   static final int STATE_CLOSED = 1;
 
-  private final LinkedBlockingQueue<Pooled<C>> free;
+  private final LinkedBlockingDeque<Pooled<C>> free;
   private final Set<Pooled<C>> all = Collections.newSetFromMap(new ConcurrentHashMap<>());
   private final AtomicInteger total = new AtomicInteger();
   private final Logger log;
@@ -51,7 +51,7 @@ abstract class BasePool<C> implements AutoCloseable {
   BasePool(final Config config, final Defaults defaults, final Class<?> clazz) {
     this.config = config;
     this.defaults = defaults;
-    this.free = new LinkedBlockingQueue<>(config.getMaxPoolSize());
+    this.free = new LinkedBlockingDeque<>(config.getMaxPoolSize());
     this.executor = config.getMaintenanceExecutor();
     this.log = config.getLoggerFactory().getLogger(clazz);
   }
@@ -89,7 +89,7 @@ abstract class BasePool<C> implements AutoCloseable {
       return;
     }
     config.getListener().onConnectionReturned(val.getAquired());
-    this.free.add(val);
+    this.free.addFirst(val);
   }
 
   void remove(final Pooled<C> val) {
