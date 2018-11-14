@@ -45,7 +45,7 @@ test:
 
 .PHONY: coverage
 coverage:
-	@find bazel-out -name coverage.dat -exec rm {} +
+	@if [ -e bazel-out ]; then find bazel-out -name coverage.dat -exec rm {} +; fi
 	@bazel coverage //src/test/java/io/machinecode/hexane/...:all \
 		$(args)
 	@bazel build //:coverage \
