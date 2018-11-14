@@ -79,7 +79,7 @@ def _repack_archive(unpack, pack, dir, in_path, out_path):
   act_dir = "test" if not dir else "test/%s" % dir
   return " \\\n  && " + " \\\n  && ".join([
       "mkdir -p %s" % act_dir,
-      "(cd %s && %s $p/%s)" % (act_dir, unpack, in_path),
+      "(cd %s && %s $p/%s >/dev/null)" % (act_dir, unpack, in_path),
       "(cd test && %s $p/%s .)" % (pack, out_path),
       "rm -rf test",
   ])
