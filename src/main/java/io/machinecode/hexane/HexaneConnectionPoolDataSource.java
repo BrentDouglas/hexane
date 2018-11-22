@@ -16,11 +16,11 @@
  */
 package io.machinecode.hexane;
 
-import javax.sql.ConnectionPoolDataSource;
-import javax.sql.PooledConnection;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
+import javax.sql.ConnectionPoolDataSource;
+import javax.sql.PooledConnection;
 
 /**
  * A datasource backed by a {@link ConnectionPoolDataSource} that pools {@link PooledConnection}'s.

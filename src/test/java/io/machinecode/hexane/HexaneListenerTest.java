@@ -16,24 +16,23 @@
  */
 package io.machinecode.hexane;
 
-import io.machinecode.hexane.Config.Builder;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
-import javax.sql.ConnectionPoolDataSource;
-import javax.sql.DataSource;
-import javax.sql.PooledConnection;
-import javax.sql.XAConnection;
-import javax.sql.XADataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
-
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import io.machinecode.hexane.Config.Builder;
+import java.sql.Connection;
+import java.sql.SQLException;
+import javax.sql.ConnectionPoolDataSource;
+import javax.sql.DataSource;
+import javax.sql.PooledConnection;
+import javax.sql.XAConnection;
+import javax.sql.XADataSource;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 public class HexaneListenerTest extends Assert {

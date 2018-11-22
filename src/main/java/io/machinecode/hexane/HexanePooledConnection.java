@@ -16,13 +16,13 @@
  */
 package io.machinecode.hexane;
 
-import javax.sql.ConnectionEventListener;
-import javax.sql.PooledConnection;
-import javax.sql.StatementEventListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.SQLNonTransientException;
+import javax.sql.ConnectionEventListener;
+import javax.sql.PooledConnection;
+import javax.sql.StatementEventListener;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 final class HexanePooledConnection extends Terminal implements PooledConnection {

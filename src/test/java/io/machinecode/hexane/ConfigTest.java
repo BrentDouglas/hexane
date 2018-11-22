@@ -16,24 +16,22 @@
  */
 package io.machinecode.hexane;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-import javax.sql.ConnectionPoolDataSource;
-import javax.sql.DataSource;
-import javax.sql.PooledConnection;
-import javax.sql.XAConnection;
-import javax.sql.XADataSource;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLNonTransientException;
 import java.util.Collections;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import javax.sql.ConnectionPoolDataSource;
+import javax.sql.DataSource;
+import javax.sql.PooledConnection;
+import javax.sql.XAConnection;
+import javax.sql.XADataSource;
+import org.junit.Assert;
+import org.junit.Test;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 public class ConfigTest extends Assert {

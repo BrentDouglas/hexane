@@ -1,4 +1,4 @@
-load("//tools/java:maven_jar.bzl", "maven_jar")
+load("@io_machinecode_tools//tools/java:maven_jar.bzl", "maven_jar")
 
 def pool_repositories(
         hikari_version = "3.2.0",

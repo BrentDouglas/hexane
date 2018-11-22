@@ -16,14 +16,6 @@
  */
 package io.machinecode.hexane;
 
-import java.sql.Connection;
-import java.sql.SQLClientInfoException;
-import java.sql.SQLException;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Properties;
-import java.util.concurrent.Executor;
-
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 final class State {
   private final Defaults defaults;

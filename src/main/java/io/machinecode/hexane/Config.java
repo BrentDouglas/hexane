@@ -16,9 +16,6 @@
  */
 package io.machinecode.hexane;
 
-import javax.sql.ConnectionPoolDataSource;
-import javax.sql.DataSource;
-import javax.sql.XADataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLNonTransientException;
@@ -29,6 +26,9 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import javax.sql.ConnectionPoolDataSource;
+import javax.sql.DataSource;
+import javax.sql.XADataSource;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 public final class Config {

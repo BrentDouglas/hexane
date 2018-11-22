@@ -1,0 +1,43 @@
+load("@io_machinecode_tools//tools/ui:html.bzl", "html_compressor_library")
+load("@io_machinecode_tools//tools/ui:scss.bzl", "scss_library")
+load("@io_machinecode_tools//tools/ui:webfont.bzl", "webfont_library")
+load("@io_machinecode_tools//tools/ui:concat.bzl", "concat_library")
+load("@io_machinecode_tools//tools/ui:csso.bzl", "csso_library")
+
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "icon",
+    srcs = glob(["*.ico"]),
+)
+
+filegroup(
+    name = "img",
+    srcs = glob(["*.svg"]),
+)
+
+html_compressor_library(
+    name = "html",
+    srcs = ["index.html"],
+    dest = "min.html",
+)
+
+scss_library(
+    name = "scss",
+    srcs = [],
+    entry = ["site.scss"],
+    #    deps = [
+    #        "@material-components-web//pkg",
+    #    ],
+)
+
+csso_library(
+    name = "css",
+    srcs = [
+        ":scss",
+    ],
+    dest = "app.css",
+    #    string_opts = {
+    #        "map": "inline",
+    #    },
+)

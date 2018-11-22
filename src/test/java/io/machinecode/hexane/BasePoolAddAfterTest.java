@@ -16,17 +16,16 @@
  */
 package io.machinecode.hexane;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.sql.Connection;
 import java.sql.SQLTransientConnectionException;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * This test simulates the refill task finishing after we poll

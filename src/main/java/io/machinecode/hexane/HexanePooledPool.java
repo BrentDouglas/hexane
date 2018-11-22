@@ -16,16 +16,16 @@
  */
 package io.machinecode.hexane;
 
-import javax.sql.ConnectionEventListener;
-import javax.sql.ConnectionPoolDataSource;
-import javax.sql.PooledConnection;
-import javax.sql.StatementEventListener;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
+import javax.sql.ConnectionEventListener;
+import javax.sql.ConnectionPoolDataSource;
+import javax.sql.PooledConnection;
+import javax.sql.StatementEventListener;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 final class HexanePooledPool extends BasePool<PooledConnection> {

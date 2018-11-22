@@ -17,10 +17,9 @@
 package io.machinecode.hexane;
 
 import io.machinecode.hexane.HexanePooledConnection.ClosedPooledConnection;
+import java.sql.SQLException;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.sql.SQLException;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 public class ClosedPooledConnectionTest extends Assert {

@@ -16,12 +16,11 @@
  */
 package io.machinecode.hexane;
 
-import org.junit.Assert;
-import org.junit.Test;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import org.junit.Assert;
+import org.junit.Test;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 public class StatementKeyTest extends Assert {

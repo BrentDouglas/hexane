@@ -1,12 +1,8 @@
-"""
-Utilities from Gerrit
-"""
-
 load("@bazel_skylib//:skylark_library.bzl", "skylark_library")
 
 package(default_visibility = ["//visibility:public"])
 
 skylark_library(
-    name = "java",
+    name = "rules",
     srcs = glob(["**/*.bzl"]),
 )

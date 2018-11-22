@@ -16,14 +16,14 @@
  */
 package io.machinecode.hexane;
 
-import javax.sql.ConnectionEventListener;
-import javax.sql.StatementEventListener;
-import javax.sql.XAConnection;
-import javax.transaction.xa.XAResource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.SQLNonTransientException;
+import javax.sql.ConnectionEventListener;
+import javax.sql.StatementEventListener;
+import javax.sql.XAConnection;
+import javax.transaction.xa.XAResource;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 final class HexaneXAConnection extends Terminal implements XAConnection {

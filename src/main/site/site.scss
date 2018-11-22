@@ -1,0 +1,175 @@
+// Variables
+
+$title-font-stack: 'Old Standard TT', serif;
+$content-font-stack: 'Open Sans', Helvetica, sans-serif;
+
+$light-weight: 300;
+$regular-weight: 400;
+$medium-weight: 500;
+
+$title-text-colour: black;
+$header-text-colour: rgba(0, 0, 0, 0.85);
+$content-text-colour: rgba(0, 0, 0, 0.7);
+$link-text-colour: rgba(5, 100, 200, 1.0);
+$background-colour: rgba(240, 240, 240, 0.3);
+
+// Utils
+
+@function get-letter-spacing($tracking, $font-size) {
+  @return $tracking / ($font-size * 16) * 1em;
+}
+
+@mixin base-font($font-stack, $size, $height, $weight, $spacing) {
+  font-family: $font-stack;
+  font-size: $size;
+  line-height: $height;
+  font-weight: $weight;
+  letter-spacing: $spacing;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-decoration: inherit;
+  text-transform: inherit;
+}
+
+@mixin content($size, $height, $weight, $spacing) {
+  @include base-font($content-font-stack, $size, $height, $weight, $spacing);
+}
+
+@mixin header($size, $height, $weight, $spacing) {
+  @include base-font($title-font-stack, $size, $height, $weight, $spacing);
+}
+
+// Content
+
+body {
+  background-color: $background-colour;
+}
+
+header {
+  display: grid;
+  grid-template-columns: 1fr 200px 1fr;
+  grid-template-rows: 8rem 220px 4rem auto;
+}
+
+#title {
+  grid-column-end: 4;
+  grid-column-start: 1;
+  justify-self: center;
+}
+
+#title * {
+  color: $title-text-colour;
+}
+
+#logo {
+  grid-row-start: 2;
+  grid-column-start: 2;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+  grid-row-start: 3;
+  grid-column-start: 1;
+  grid-column-end: 4;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+nav * {
+  margin: 0 0.5rem;
+}
+
+footer {
+  margin-top: 3rem;
+}
+
+li {
+  margin: 1rem 0;
+}
+
+body * {
+  @include content(
+      calc(1rem + 1vw),
+      calc(1rem + 1vw),
+      $regular-weight,
+      get-letter-spacing(.5, 1)
+  );
+  color: $content-text-colour;
+}
+
+body a {
+  color: $link-text-colour;
+}
+
+body footer * {
+  @include content(
+      calc(0.875rem + 0.5vw),
+      calc(1.25rem + 0.5vw),
+      $regular-weight,
+      get-letter-spacing(.25, .875)
+  );
+  color: $content-text-colour;
+}
+
+//h1, .h1 {
+//  @include header(
+//      calc(6rem + 1vw),
+//      calc(6rem + 1vw),
+//      $light-weight,
+//      get-letter-spacing(-1.5, 6)
+//  );
+//}
+
+//h2, .h2 {
+//  @include header(
+//      calc(3.75rem + 1vw),
+//      calc(3.75rem + 1vw),
+//      $light-weight,
+//      get-letter-spacing(-.5, 3.75)
+//  );
+//}
+
+//h3, .h3 {
+//  @include header(
+//      calc(3rem + 1vw),
+//      calc(3.125rem + 1vw),
+//      $regular-weight,
+//      normal
+//  );
+//}
+
+h4, .h4 {
+  @include header(
+      calc(2.125rem + 1vw),
+      calc(2.5rem + 1vw),
+      $regular-weight,
+      get-letter-spacing(.25, 2.125)
+  );
+}
+
+//h5, .h5 {
+//  @include header(
+//      calc(1.5rem + 1vw),
+//      calc(2rem + 1vw),
+//      $regular-weight,
+//      normal
+//  );
+//}
+
+h6, .h6 {
+  @include header(
+      calc(1.25rem + 1vw),
+      calc(2rem + 1vw),
+      $medium-weight,
+      get-letter-spacing(.25, 1.25)
+  );
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: $header-text-colour;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}

@@ -17,11 +17,10 @@
 package io.machinecode.hexane;
 
 import io.machinecode.hexane.HexaneConnection.ClosedConnection;
-import org.junit.Assert;
-import org.junit.Test;
-
 import java.sql.Connection;
 import java.sql.SQLException;
+import org.junit.Assert;
+import org.junit.Test;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 public class ClosedConnectionTest extends Assert {

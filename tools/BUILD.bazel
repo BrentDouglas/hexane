@@ -3,35 +3,17 @@ load("@io_bazel_skydoc//skylark:skylark.bzl", "skylark_doc")
 
 package(default_visibility = ["//visibility:public"])
 
-skylark_library(
-    name = "rules",
-    srcs = glob(["**/*.bzl"]),
-    deps = ["//tools/java"],
-)
+#skylark_library(
+#    name = "rules",
+#    srcs = glob(["**/*.bzl"]),
+#    deps = ["//tools/java"],
+#)
 
 skylark_doc(
     name = "docs",
+    srcs = [
+        "//tools/java:rules",
+    ],
     format = "html",
     site_root = "/rules",
-    srcs = [
-        ":rules",
-    ],
-)
-
-java_library(
-    name = "jmh",
-    exported_plugins = [":jmh_plugin"],
-    exports = [
-        "@org_openjdk_jmh_jmh_core//jar",
-    ],
-)
-
-java_plugin(
-    name = "jmh_plugin",
-    generates_api = True,
-    processor_class = "org.openjdk.jmh.generators.BenchmarkProcessor",
-    deps = [
-        "@org_openjdk_jmh_jmh_core//jar",
-        "@org_openjdk_jmh_jmh_generator_annprocess//jar",
-    ],
 )

@@ -16,9 +16,6 @@
  */
 package io.machinecode.hexane;
 
-import org.junit.Ignore;
-import org.junit.Test;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.Collections;
@@ -26,6 +23,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.function.BiConsumer;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 public class DefaultsTest extends PerDb {

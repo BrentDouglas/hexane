@@ -1,4 +1,4 @@
-load("//tools/java:maven_jar.bzl", "maven_jar")
+load("@io_machinecode_tools//tools/java:maven_jar.bzl", "maven_jar")
 
 def spring_repositories(
         javax_inject_version = "1",

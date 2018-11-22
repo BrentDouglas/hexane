@@ -1,7 +1,5 @@
 # Bazel
 bazel-*
-.ijwb
-.cov
 .srv
 .userbazelrc
 
@@ -17,6 +15,7 @@ target
 *.ipr
 *.iws
 .idea/
+.ijwb/
 idea
 
 # Eclipse

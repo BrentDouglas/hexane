@@ -1,6 +1,12 @@
 load(":deps.bzl", "database_properties", "hexane_bench_deps", "hexane_test_deps")
+load("//tools/java:java_filegroup.bzl", "java_filegroup")
 
 package(default_visibility = ["//visibility:public"])
+
+java_filegroup(
+    name = "check-srcs",
+    srcs = glob(["*.java"]),
+)
 
 filegroup(
     name = "srcs",
@@ -23,7 +29,7 @@ java_library(
         name = test[:-5],
         srcs = [test],
         jvm_flags = ["'%s'" % it for it in database_properties] + [
-            "'-Dcom.google.testing.junit.runner.shouldInstallTestSecurityManager=false'"
+            "'-Dcom.google.testing.junit.runner.shouldInstallTestSecurityManager=false'",
         ],
         deps = hexane_test_deps + [
             ":hexane",

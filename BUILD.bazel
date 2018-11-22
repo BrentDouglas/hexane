@@ -1,6 +1,6 @@
-load("//tools:coverage.bzl", "coverage_html")
-load("//tools:util.bzl", "to_tar")
-load("//tools/java:java_doc.bzl", "java_doc")
+load("@io_machinecode_tools//tools:coverage.bzl", "coverage_html")
+load("@io_machinecode_tools//tools:util.bzl", "to_tar")
+load("@io_machinecode_tools//tools/java:javadoc.bzl", "java_doc")
 load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
 
 package(default_visibility = ["//visibility:public"])
@@ -50,7 +50,16 @@ to_tar(
 
 pkg_tar(
     name = "site",
+    srcs = [
+        "//src/main/site:img",
+    ],
     extension = "tar.gz",
+    files = {
+        "//src/main/site:css": "css/app.css",
+        "//src/main/site:html": "index.html",
+        "//src/main/site:icon": "favicon.ico",
+    },
+    mode = "0644",
     deps = [
         ":javadoc-tar",
         ":rules-tar",

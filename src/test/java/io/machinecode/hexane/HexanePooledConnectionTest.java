@@ -16,12 +16,11 @@
  */
 package io.machinecode.hexane;
 
-import org.junit.Before;
-
-import javax.sql.PooledConnection;
-
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+import javax.sql.PooledConnection;
+import org.junit.Before;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 public class HexanePooledConnectionTest

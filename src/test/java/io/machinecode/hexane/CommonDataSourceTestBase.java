@@ -16,20 +16,19 @@
  */
 package io.machinecode.hexane;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Test;
-
-import javax.sql.CommonDataSource;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.SQLFeatureNotSupportedException;
-
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
+import javax.sql.CommonDataSource;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Test;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 public abstract class CommonDataSourceTestBase<

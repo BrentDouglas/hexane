@@ -3,7 +3,7 @@ The docs
 """
 
 load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
-load("//tools:asciidoc.bzl", "doc_to_html", "doc_to_pdf")
+load("@io_machinecode_tools//tools:asciidoc.bzl", "doc_to_html", "doc_to_pdf")
 
 package(default_visibility = ["//visibility:public"])
 

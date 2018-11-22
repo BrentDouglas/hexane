@@ -16,19 +16,18 @@
  */
 package io.machinecode.hexane;
 
-import io.machinecode.hexane.Defaults.Builder;
-import org.junit.Before;
-import org.junit.Test;
-
-import javax.sql.XAConnection;
-import javax.sql.XADataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.SQLFeatureNotSupportedException;
-
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+import io.machinecode.hexane.Defaults.Builder;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
+import javax.sql.XAConnection;
+import javax.sql.XADataSource;
+import org.junit.Before;
+import org.junit.Test;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 public class HexaneXADataSourceTest

@@ -16,23 +16,22 @@
  */
 package io.machinecode.hexane;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
-import javax.sql.ConnectionEventListener;
-import javax.sql.StatementEventListener;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
-
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.sql.ConnectionEventListener;
+import javax.sql.StatementEventListener;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 public class HexaneManagedConnectionTest extends Assert {

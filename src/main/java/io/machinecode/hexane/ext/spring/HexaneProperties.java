@@ -19,12 +19,11 @@ package io.machinecode.hexane.ext.spring;
 import io.machinecode.hexane.HoldabilityType;
 import io.machinecode.hexane.LoggerType;
 import io.machinecode.hexane.TransactionIsolationType;
-import org.springframework.beans.factory.BeanClassLoaderAware;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+import org.springframework.beans.factory.BeanClassLoaderAware;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 @ConfigurationProperties(prefix = "spring.datasource.hexane")

@@ -1,68 +1,108 @@
-BAZEL_BIN := $(shell bazel info bazel-bin)
-
-# Argument to pass to the build system
-a := $(shell echo "$${a:-}")
-ifndef args
-args := $(a)
-endif
-
-open := $(shell if [ "$$(uname)" == "Darwin" ]; then echo "open"; else echo "xdg-open"; fi)
-
-.PHONY: all
-all: help
+ROOT_DIR = .
+include params.mk
 
 .PHONY: help
 help:
 	@echo ""
 	@echo "-- Available make targets:"
 	@echo ""
-	@echo "   bootstrap                  - Set up databases"
-	@echo "   shutdown                   - Clean up databases"
+	@echo "   up                         - Set up databases"
+	@echo "   down                       - Clean up databases"
 	@echo "   build                      - Build the library"
+	@echo "   check                      - Run linters"
 	@echo "   test                       - Run the tests"
 	@echo "   coverage                   - Get test coverage"
 	@echo "   doc                        - Build the docs"
+	@echo "   site                       - Build and watch the website"
 	@echo ""
 
 
-.PHONY: bootstrap
-bootstrap:
+.PHONY: up
+up:
 	@docker-compose up -d
 
-.PHONY: shutdown
-shutdown:
+.PHONY: down
+down:
 	@docker-compose down --remove-orphans
+
+.PHONY: all
+all: build check build-coverage tools doc
 
 .PHONY: build
 build:
 	@bazel build //src/main/java/io/machinecode/hexane \
 		$(args)
 
+.PHONY: format
+format:
+	bazel build @com_github_bazelbuild_buildtools//buildifier \
+				@google_java_format//jar
+	find . -type f \( -name BUILD -or -name BUILD.bazel \) \
+		| xargs $(BAZEL_BIN)/external/com_github_bazelbuild_buildtools/buildifier/*/buildifier
+	java -jar $(BAZEL_EXEC_ROOT)/external/google_java_format/jar/downloaded.jar -i \
+		$$(find src/ -type f -name '*.java')
+
+.PHONY: check
+check:
+	@bazel test //...:all \
+		--build_tag_filters=check \
+		--test_tag_filters=check \
+		$(args)
+
 .PHONY: test
 test:
 	@bazel test //...:all \
+		--test_tag_filters=-check \
 		$(args)
 
-.PHONY: coverage
-coverage:
+.PHONY: build-coverage
+build-coverage:
 	@if [ -e bazel-out ]; then find bazel-out -name coverage.dat -exec rm {} +; fi
 	@bazel coverage //src/test/java/io/machinecode/hexane/...:all \
+		--test_tag_filters=-check \
 		$(args)
 	@bazel build //:coverage \
 		$(args)
-	@mkdir -p .cov
-	@rm -rf .cov && mkdir -p .cov
-	@bash -c "(cd .cov && tar xf $(BAZEL_BIN)/coverage.tar)"
-	@$(open) .cov/index.html
+
+.PHONY: coverage
+coverage: build-coverage
+	@mkdir -p .srv/cov
+	@rm -rf .srv/cov && mkdir -p .srv/cov
+	@bash -c "(cd .srv/cov && tar xf $(BAZEL_BIN)/coverage.tar)"
+	@$(open) .srv/cov/index.html
+
+.PHONY: tools
+tools:
+	@bazel build \
+		@io_machinecode_tools//src/main/java/io/machinecode/tools/devsrv \
+		@io_machinecode_tools//tools:watch
 
 .PHONY: doc
 doc:
 	@bazel build //:site \
 		$(args)
 
+.PHONY: run-site
+run-site:
+	$(DEV_SRV) \
+		--debug=$(SITE_DEVSRV_DEBUG_PORT) \
+		--dir .srv/site \
+		--host $(host) \
+		--port $(SITE_PORT) \
+		--push-resources /,/index.html=/css/app.css,/logo.svg,/favicon.ico \
+		$(keystore) \
+		$(args)
+
+.PHONY: serve-site
+serve-site: doc
+	@mkdir -p .srv/site
+	@rm -rf .srv/site && mkdir -p .srv/site
+	@bash -c "(cd .srv/site && tar zxf $(BAZEL_BIN)/site.tar.gz)"
+	@curl -fs $(transport)://$(host):$(SITE_PORT)/notify || $(open) $(transport)://$(host):$(SITE_PORT)/
+
 .PHONY: site
-site: doc
-	@mkdir -p .srv
-	@rm -rf .srv && mkdir -p .srv
-	@bash -c "(cd .srv && tar zxf $(BAZEL_BIN)/site.tar.gz)"
-	@$(open) .srv/docs/index.html
+site: tools
+	@$(WATCH) \
+		-d src/main/site \
+		-c 'make run-site' \
+		-w 'make serve-site'

@@ -1,7 +1,13 @@
 load("//:deps.bzl", "build_deps", "test_deps")
 load("//src/main/java/io/machinecode/hexane/ext/spring:deps.bzl", "spring_deps")
+load("//tools/java:java_filegroup.bzl", "java_filegroup")
 
 package(default_visibility = ["//visibility:public"])
+
+java_filegroup(
+    name = "check-srcs",
+    srcs = glob(["*.java"]),
+)
 
 filegroup(
     name = "srcs",

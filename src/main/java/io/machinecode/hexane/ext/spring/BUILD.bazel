@@ -1,9 +1,10 @@
 load("//:deps.bzl", "build_deps")
 load(":deps.bzl", "spring_deps")
+load("//tools/java:java_filegroup.bzl", "java_filegroup")
 
 package(default_visibility = ["//visibility:public"])
 
-filegroup(
+java_filegroup(
     name = "srcs",
     srcs = glob(["*.java"]),
 )

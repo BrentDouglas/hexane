@@ -16,14 +16,14 @@
  */
 package io.machinecode.hexane;
 
-import javax.sql.CommonDataSource;
-import javax.sql.DataSource;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.sql.Wrapper;
 import java.util.logging.Logger;
+import javax.sql.CommonDataSource;
+import javax.sql.DataSource;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 abstract class BaseDataSource<C, P extends BasePool<C>, D extends CommonDataSource>

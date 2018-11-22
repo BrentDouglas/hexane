@@ -16,11 +16,11 @@
  */
 package io.machinecode.hexane;
 
-import javax.sql.XAConnection;
-import javax.sql.XADataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
+import javax.sql.XAConnection;
+import javax.sql.XADataSource;
 
 /**
  * A datasource backed by an {@link XADataSource} that pools {@link XAConnection}'s.

@@ -1,6 +1,21 @@
 workspace(name = "io_machinecode_hexane")
 
-load("//tools/java:maven_jar.bzl", "maven_jar")
+local_repository(
+    name = "io_machinecode_tools",
+    path = "../tools",
+)
+
+load("@io_machinecode_tools//tools/java:devserver.bzl", "devserver_certificates")
+
+devserver_certificates(
+    name = "io_machinecode_devserver_certificates",
+    hosts = [
+        "localhost",
+        "0.0.0.0",
+    ],
+)
+
+load("@io_machinecode_tools//tools/java:maven_jar.bzl", "maven_jar")
 
 bazel_version = "0.17.1"
 
@@ -89,7 +104,33 @@ maven_jar(
     artifact = "org.jboss.logging:jboss-logging:" + jboss_logging_version,
 )
 
-load("//tools/include:jmh_repositories.bzl", "jmh_repositories")
+load("@io_machinecode_tools//imports:build_repositories.bzl", "build_repositories")
+
+build_repositories()
+
+load("@io_machinecode_tools//imports:checkstyle_repositories.bzl", "checkstyle_repositories")
+
+checkstyle_repositories()
+
+load("@io_machinecode_tools//imports:format_repositories.bzl", "format_repositories")
+
+format_repositories()
+
+load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+
+go_rules_dependencies()
+
+go_register_toolchains()
+
+load("@io_machinecode_tools//imports:devsrv_repositories.bzl", "devsrv_repositories")
+
+devsrv_repositories()
+
+load("@io_machinecode_tools//imports:undertow_repositories.bzl", "undertow_repositories")
+
+undertow_repositories()
+
+load("@io_machinecode_tools//imports:jmh_repositories.bzl", "jmh_repositories")
 
 jmh_repositories()
 

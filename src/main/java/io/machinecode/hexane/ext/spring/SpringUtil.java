@@ -19,14 +19,6 @@ package io.machinecode.hexane.ext.spring;
 import io.machinecode.hexane.Config;
 import io.machinecode.hexane.Config.Builder;
 import io.machinecode.hexane.Hexane;
-import org.springframework.beans.BeanUtils;
-import org.springframework.boot.context.properties.bind.Bindable;
-import org.springframework.boot.context.properties.bind.Binder;
-import org.springframework.boot.context.properties.source.ConfigurationPropertyName;
-import org.springframework.boot.context.properties.source.MapConfigurationPropertySource;
-import org.springframework.util.ClassUtils;
-
-import javax.sql.DataSource;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.Driver;
@@ -39,11 +31,19 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.logging.Logger;
+import javax.sql.DataSource;
+import org.springframework.beans.BeanUtils;
+import org.springframework.boot.context.properties.bind.Bindable;
+import org.springframework.boot.context.properties.bind.Binder;
+import org.springframework.boot.context.properties.source.ConfigurationPropertyName;
+import org.springframework.boot.context.properties.source.MapConfigurationPropertySource;
+import org.springframework.util.ClassUtils;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 class SpringUtil {
 
-  static DataSource getDriverDataSource(final HexaneProperties properties) throws SQLException, ClassNotFoundException {
+  static DataSource getDriverDataSource(final HexaneProperties properties)
+      throws SQLException, ClassNotFoundException {
     Driver driver = null;
     final String driverClassName = properties.getDriverClassName();
     if (driverClassName != null) {
@@ -176,7 +176,8 @@ class SpringUtil {
     binder.bind(ConfigurationPropertyName.EMPTY, Bindable.ofInstance(target));
   }
 
-  static Object newInstance(final ClassLoader classLoader, final String className) throws ClassNotFoundException {
+  static Object newInstance(final ClassLoader classLoader, final String className)
+      throws ClassNotFoundException {
     final Class<?> dataSourceClass = ClassUtils.forName(className, classLoader);
     return BeanUtils.instantiateClass(dataSourceClass);
   }

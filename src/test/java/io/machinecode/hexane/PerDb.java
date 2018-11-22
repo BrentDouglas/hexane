@@ -16,15 +16,13 @@
  */
 package io.machinecode.hexane;
 
+import java.sql.Connection;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
-
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 @RunWith(Parameterized.class)

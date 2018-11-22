@@ -27,6 +27,9 @@ import io.agroal.pool.DataSource;
 import io.machinecode.hexane.Hexane;
 import io.machinecode.hexane.HexaneXADataSource;
 import io.machinecode.hexane.TestBase;
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
+import javax.sql.XADataSource;
 import org.apache.commons.dbcp2.ConnectionFactory;
 import org.apache.commons.dbcp2.DataSourceConnectionFactory;
 import org.apache.commons.dbcp2.PoolableConnection;
@@ -34,13 +37,8 @@ import org.apache.commons.dbcp2.PoolableConnectionFactory;
 import org.apache.commons.dbcp2.PoolingDataSource;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.openjdk.jmh.annotations.Level;
-import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.TearDown;
-
-import javax.sql.XADataSource;
-import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 abstract class BenchBase {
@@ -49,6 +47,7 @@ abstract class BenchBase {
   AutoCloseable close;
 
   protected abstract String getName();
+
   protected abstract String getPoolType();
 
   @Setup(Level.Trial)

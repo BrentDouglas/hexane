@@ -16,14 +16,13 @@
  */
 package io.machinecode.hexane;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import javax.sql.XAConnection;
 import javax.transaction.xa.XAResource;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.Before;
+import org.junit.Test;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 public class HexaneXAConnectionTest

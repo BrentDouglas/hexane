@@ -16,7 +16,8 @@
  */
 package io.machinecode.hexane;
 
-import org.junit.Test;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -25,9 +26,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
+import org.junit.Test;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 public abstract class CheckedTestBase<R, D extends R> extends UncheckedTestBase<R, D> {

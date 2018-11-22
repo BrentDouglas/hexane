@@ -16,17 +16,16 @@
  */
 package io.machinecode.hexane.ext.spring;
 
+import static org.mockito.Mockito.when;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import javax.inject.Inject;
+import javax.sql.DataSource;
 import org.hsqldb.jdbc.pool.JDBCXADataSource;
 import org.junit.BeforeClass;
 import org.springframework.boot.autoconfigure.transaction.jta.JtaAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import javax.inject.Inject;
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
-
-import static org.mockito.Mockito.when;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 @SpringBootTest(

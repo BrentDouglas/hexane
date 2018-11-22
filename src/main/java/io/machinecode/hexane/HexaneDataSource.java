@@ -16,9 +16,9 @@
  */
 package io.machinecode.hexane;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import javax.sql.DataSource;
 
 /**
  * A datasource backed by a {@link DataSource} that pools {@link Connection}'s.

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) $tofay.year Brent Douglas and other contributors
+ * Copyright (C) 2018 Brent Douglas and other contributors
  * as indicated by the @author tags. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");

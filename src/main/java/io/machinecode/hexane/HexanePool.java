@@ -16,9 +16,9 @@
  */
 package io.machinecode.hexane;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import javax.sql.DataSource;
 
 /** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
 final class HexanePool extends BasePool<Connection> {
