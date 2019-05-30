@@ -11,11 +11,6 @@ filegroup(
     srcs = glob(["*.ico"]),
 )
 
-filegroup(
-    name = "img",
-    srcs = glob(["*.svg"]),
-)
-
 html_compressor_library(
     name = "html",
     srcs = ["index.html"],

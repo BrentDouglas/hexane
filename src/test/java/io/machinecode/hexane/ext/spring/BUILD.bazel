@@ -93,6 +93,7 @@ atomikos_deps = [
             "@org_springframework_spring_jcl//jar",
             "@org_springframework_spring_jdbc//jar",
             "@org_springframework_spring_tx//jar",
+            "@org_slf4j_slf4j_api//jar",
         ],
         deps = all_deps + [
             "@org_codehaus_btm_btm//jar",

@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width">
     <link rel="icon" href="favicon.ico" sizes="16x16 32x32 64x64"
           type="image/vnd.microsoft.icon"/>
-    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="CSS_FILE">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans"
           rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Old+Standard+TT"
@@ -21,9 +21,7 @@
         <h4 class="uppercase">Hexane</h4>
     </a>
 
-    <!--<img id="logo" src="logo.svg" height="200px" width="200px">-->
-
-    <img id="logo" src="hexane.svg" height="200px" width="200px">
+    <img id="logo" src="img/hexane.svg" height="200px" width="200px">
 
     <nav role="navigation">
         <a href="#about" class="h6 uppercase">
@@ -35,26 +33,30 @@
         <a href="./javadoc/index.html" class="h6 uppercase">
             Javadoc
         </a>
-        <!--<a href="./rules/index.html" class="h6 uppercase">-->
-        <!--Rules-->
-        <!--</a>-->
+        <a href="./rules/index.html" class="h6 uppercase">
+            Rules
+        </a>
     </nav>
 </header>
 
 <main role="main">
-    <section>
-        <div id="about">
+    <article>
+        <section id="about">
             <h4>About</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio,
-                nobis culpa rem, vitae earum aliquid.</p>
-        </div>
-    </section>
+            <p>
+                Hexane is a driver agnostic connection pool for java capable of supporting
+                XA transactions. It provides a number of different implementations of the
+                java.sql connection classes that work with or around different levels of
+                support from the underlying driver.
+            </p>
+        </section>
+    </article>
 </main>
 
 <footer>
-    <section>
+    <p>
         © 2018 Machine Code Limited
-    </section>
+    </p>
 </footer>
 </body>
 </html>

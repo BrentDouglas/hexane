@@ -1,7 +1,7 @@
 build_deps = [
-    "@org_slf4j_slf4j_api//jar",
-    "@org_apache_logging_log4j_log4j_api//jar",
-    "@org_jboss_logging_jboss_logging//jar",
+    "@org_slf4j_slf4j_api//jar:neverlink",
+    "@org_apache_logging_log4j_log4j_api//jar:neverlink",
+    "@org_jboss_logging_jboss_logging//jar:neverlink",
 ]
 
 test_deps = [

@@ -83,7 +83,7 @@ services:
     ports:
       - "30080:3306"
   oracle_11:
-    image: sath89/oracle-xe-11g
+    image: orangehrm/oracle-xe-11g
     ports:
       - "10011:1521"
   postgresql_9_3:

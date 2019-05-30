@@ -58,7 +58,9 @@ test:
 .PHONY: build-coverage
 build-coverage:
 	@if [ -e bazel-out ]; then find bazel-out -name coverage.dat -exec rm {} +; fi
-	@bazel coverage //src/test/java/io/machinecode/hexane/...:all \
+	@bazel coverage \
+		//src/main/java/io/machinecode/hexane/...:all \
+		//src/test/java/io/machinecode/hexane/...:all \
 		--test_tag_filters=-check \
 		$(args)
 	@bazel build //:coverage \
@@ -89,7 +91,7 @@ run-site:
 		--dir .srv/site \
 		--host $(host) \
 		--port $(SITE_PORT) \
-		--push-resources /,/index.html=/css/app.css,/logo.svg,/favicon.ico \
+		--push-resources /,/index.html=/css/$(shell bash -c "cd .srv/site/css && find *.css"),/logo.svg,/favicon.ico \
 		$(keystore) \
 		$(args)
 
@@ -97,7 +99,7 @@ run-site:
 serve-site: doc
 	@mkdir -p .srv/site
 	@rm -rf .srv/site && mkdir -p .srv/site
-	@bash -c "(cd .srv/site && tar zxf $(BAZEL_BIN)/site.tar.gz)"
+	@bash -c "(cd .srv/site && tar xf $(BAZEL_BIN)/site.tar)"
 	@curl -fs $(transport)://$(host):$(SITE_PORT)/notify || $(open) $(transport)://$(host):$(SITE_PORT)/
 
 .PHONY: site

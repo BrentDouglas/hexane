@@ -1,0 +1,16 @@
+{
+  "name": "hexane",
+  "version": "0.0.1-SNAPSHOT",
+  "readme": "README.md",
+  "author": "Machine Code Limited",
+  "private": true,
+  "license": "UNLICENSED",
+  "preferGlobal": false,
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:BrentDouglas/hexane.git"
+  },
+  "keywords": [
+    "hexane"
+  ]
+}
