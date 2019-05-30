@@ -54,7 +54,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       return new CheckedResultSet(xa, this, delegate.executeQuery());
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -63,7 +63,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       return delegate.executeUpdate();
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -72,7 +72,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setNull(parameterIndex, sqlType);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -81,7 +81,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setBoolean(parameterIndex, x);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -90,7 +90,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setByte(parameterIndex, x);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -99,7 +99,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setShort(parameterIndex, x);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -108,7 +108,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setInt(parameterIndex, x);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -117,7 +117,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setLong(parameterIndex, x);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -126,7 +126,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setFloat(parameterIndex, x);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -135,7 +135,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setDouble(parameterIndex, x);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -144,7 +144,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setBigDecimal(parameterIndex, x);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -153,7 +153,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setString(parameterIndex, x);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -162,7 +162,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setBytes(parameterIndex, x);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -171,7 +171,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setDate(parameterIndex, x);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -180,7 +180,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setTime(parameterIndex, x);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -189,7 +189,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setTimestamp(parameterIndex, x);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -199,7 +199,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setAsciiStream(parameterIndex, x, length);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -210,7 +210,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setUnicodeStream(parameterIndex, x, length);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -220,7 +220,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setBinaryStream(parameterIndex, x, length);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -229,7 +229,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.clearParameters();
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -239,7 +239,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setObject(parameterIndex, x, targetSqlType);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -248,7 +248,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setObject(parameterIndex, x);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -257,7 +257,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       return delegate.execute();
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -266,7 +266,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.addBatch();
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -276,7 +276,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setCharacterStream(parameterIndex, reader, length);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -285,7 +285,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setRef(parameterIndex, x);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -294,7 +294,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setBlob(parameterIndex, x);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -303,7 +303,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setClob(parameterIndex, x);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -312,7 +312,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setArray(parameterIndex, x);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -321,7 +321,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       return delegate.getMetaData();
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -331,7 +331,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setDate(parameterIndex, x, cal);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -341,7 +341,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setTime(parameterIndex, x, cal);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -351,7 +351,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setTimestamp(parameterIndex, x, cal);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -361,7 +361,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setNull(parameterIndex, sqlType, typeName);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -370,7 +370,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setURL(parameterIndex, x);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -379,7 +379,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       return delegate.getParameterMetaData();
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -388,7 +388,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setRowId(parameterIndex, x);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -397,7 +397,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setNString(parameterIndex, value);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -407,7 +407,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setNCharacterStream(parameterIndex, value, length);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -416,7 +416,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setNClob(parameterIndex, value);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -426,7 +426,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setClob(parameterIndex, reader, length);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -436,7 +436,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setBlob(parameterIndex, inputStream, length);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -446,7 +446,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setNClob(parameterIndex, reader, length);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -455,7 +455,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setSQLXML(parameterIndex, xmlObject);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -466,7 +466,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setObject(parameterIndex, x, targetSqlType, scaleOrLength);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -476,7 +476,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setAsciiStream(parameterIndex, x, length);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -486,7 +486,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setBinaryStream(parameterIndex, x, length);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -496,7 +496,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setCharacterStream(parameterIndex, reader, length);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -505,7 +505,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setAsciiStream(parameterIndex, x);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -514,7 +514,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setBinaryStream(parameterIndex, x);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -524,7 +524,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setCharacterStream(parameterIndex, reader);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -534,7 +534,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setNCharacterStream(parameterIndex, value);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -543,7 +543,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setClob(parameterIndex, reader);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -552,7 +552,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setBlob(parameterIndex, inputStream);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -561,7 +561,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setNClob(parameterIndex, reader);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -575,7 +575,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setObject(parameterIndex, x, targetSqlType, scaleOrLength);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -585,7 +585,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       delegate.setObject(parameterIndex, x, targetSqlType);
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 
@@ -594,7 +594,7 @@ class CheckedPreparedStatement<S extends PreparedStatement> extends CheckedState
     try {
       return delegate.executeLargeUpdate();
     } catch (final SQLException e) {
-      throw Util.handleStatementFatalSQL(xa, this, e);
+      throw Util.handleStatementFatalSQL(xa, this.delegate, e);
     }
   }
 }
