@@ -75,8 +75,8 @@ final class Util {
 
   static <E extends SQLException> E handleStatementFatalSQL(
       final Terminal xa, final PreparedStatement statement, final E e) {
-    final ExceptionHandler exceptionHander = xa.getConfig().getExceptionHandler();
-    if (exceptionHander.isStatementErrorFatal(e)) {
+    final ExceptionHandler exceptionHandler = xa.getConfig().getExceptionHandler();
+    if (exceptionHandler.isStatementErrorFatal(e)) {
       xa.evict(statement, e);
     }
     return Util.handleFatalSQL(xa, e);
