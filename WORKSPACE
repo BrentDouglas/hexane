@@ -7,11 +7,11 @@ workspace(name = "io_machinecode_hexane")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-io_machinecode_tools_version = "5ccba3d8f0f85b583cff6ec6d5ffa282281483f8"
+io_machinecode_tools_version = "24c61f75f29fac999f006a18f85f6abd656e5d30"
 
 http_archive(
     name = "io_machinecode_tools",
-    sha256 = "ef39d200ac04b97dee47c0ff5d4affc521c6fa2538969f44df89b61507b2ce82",
+    sha256 = "265251ca6efc641a727e42f64320401a75b970384f60105961111b78021a35c7",
     strip_prefix = "tools-" + io_machinecode_tools_version,
     urls = ["https://github.com/BrentDouglas/tools/archive/%s.tar.gz" % io_machinecode_tools_version],
 )
