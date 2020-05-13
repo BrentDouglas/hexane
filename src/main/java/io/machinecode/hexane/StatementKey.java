@@ -200,9 +200,10 @@ final class StatementKey {
           digest.update(columnName.getBytes(StandardCharsets.UTF_8));
         }
       }
-      if (columnNames != null) {
-        for (final String columnName : columnNames) {
-          digest.update(columnName.getBytes(StandardCharsets.UTF_8));
+      final Bits bits = Bits.getBits();
+      if (columnIndexes != null) {
+        for (final int columnIndex : columnIndexes) {
+          bits.update(digest, columnIndex);
         }
       }
       final String trim = sql.trim();
@@ -214,7 +215,6 @@ final class StatementKey {
       ret[2] = concurrency;
       ret[3] = holdability;
       ret[4] = flag;
-      final Bits bits = Bits.getBits();
       bits.set32(ret, 5, trim.length());
       bits.set32(ret, 9, columnNames == null ? Config.UNSET : columnNames.length);
       bits.set32(ret, 13, columnIndexes == null ? Config.UNSET : columnIndexes.length);
@@ -235,6 +235,8 @@ final class StatementKey {
 
     abstract void set32(final byte[] output, final int idx, final int val);
 
+    abstract void update(final MessageDigest output, final int val);
+
     static class LEBits extends Bits {
       static final LEBits INSTANCE = new LEBits();
 
@@ -248,9 +250,16 @@ final class StatementKey {
 
       public void set32(final byte[] output, final int idx, final int val) {
         output[idx] = (byte) val;
-        output[idx + 1] = (byte) (val << 8);
-        output[idx + 2] = (byte) (val << 16);
-        output[idx + 3] = (byte) (val << 24);
+        output[idx + 1] = (byte) (val >> 8);
+        output[idx + 2] = (byte) (val >> 16);
+        output[idx + 3] = (byte) (val >> 24);
+      }
+
+      public void update(final MessageDigest output, final int val) {
+        output.update((byte) val);
+        output.update((byte) (val >> 8));
+        output.update((byte) (val >> 16));
+        output.update((byte) (val >> 24));
       }
     }
 
@@ -267,9 +276,16 @@ final class StatementKey {
 
       public void set32(final byte[] output, final int idx, final int val) {
         output[idx + 3] = (byte) val;
-        output[idx + 2] = (byte) (val << 8);
-        output[idx + 1] = (byte) (val << 16);
-        output[idx] = (byte) (val << 24);
+        output[idx + 2] = (byte) (val >> 8);
+        output[idx + 1] = (byte) (val >> 16);
+        output[idx] = (byte) (val >> 24);
+      }
+
+      public void update(final MessageDigest output, final int val) {
+        output.update((byte) (val >> 24));
+        output.update((byte) (val >> 16));
+        output.update((byte) (val >> 8));
+        output.update((byte) val);
       }
     }
   }

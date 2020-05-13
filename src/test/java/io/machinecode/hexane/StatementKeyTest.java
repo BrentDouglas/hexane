@@ -36,7 +36,7 @@ public class StatementKeyTest extends Assert {
             ResultSet.HOLD_CURSORS_OVER_COMMIT,
             Statement.RETURN_GENERATED_KEYS,
             new String[] {"a"},
-            new int[1]);
+            new int[] {1234567890});
 
     assertEquals(
         "StatementKey{"
@@ -48,8 +48,215 @@ public class StatementKeyTest extends Assert {
             + " sqlLength=8,"
             + " columnNames=String[1],"
             + " columnIndices=int[1],"
-            + " hash=pzW-GdRnJ2f2XASgyDLSuFeqMRE="
+            + " hash=bJ_E04iXmitzR0l8kvqOwCUWQ4w="
             + "}",
         key.toString());
+  }
+
+  @Test
+  public void sqlTrimWhiteSpace() throws SQLException {
+    assertEquals(
+        StatementKey.create(
+            "SELECT 1",
+            true,
+            ResultSet.TYPE_FORWARD_ONLY,
+            ResultSet.CONCUR_READ_ONLY,
+            ResultSet.HOLD_CURSORS_OVER_COMMIT,
+            Statement.RETURN_GENERATED_KEYS,
+            null,
+            null),
+        StatementKey.create(
+            "  SELECT 1  ",
+            true,
+            ResultSet.TYPE_FORWARD_ONLY,
+            ResultSet.CONCUR_READ_ONLY,
+            ResultSet.HOLD_CURSORS_OVER_COMMIT,
+            Statement.RETURN_GENERATED_KEYS,
+            null,
+            null));
+  }
+
+  @Test
+  public void sqlEquality() throws SQLException {
+    assertNotEquals(
+        StatementKey.create(
+            "SELECT 1",
+            true,
+            ResultSet.TYPE_FORWARD_ONLY,
+            ResultSet.CONCUR_READ_ONLY,
+            ResultSet.HOLD_CURSORS_OVER_COMMIT,
+            Statement.RETURN_GENERATED_KEYS,
+            null,
+            null),
+        StatementKey.create(
+            "SELECT 2",
+            true,
+            ResultSet.TYPE_FORWARD_ONLY,
+            ResultSet.CONCUR_READ_ONLY,
+            ResultSet.HOLD_CURSORS_OVER_COMMIT,
+            Statement.RETURN_GENERATED_KEYS,
+            null,
+            null));
+  }
+
+  @Test
+  public void callableEquality() throws SQLException {
+    assertNotEquals(
+        StatementKey.create(
+            "SELECT 1",
+            true,
+            ResultSet.TYPE_FORWARD_ONLY,
+            ResultSet.CONCUR_READ_ONLY,
+            ResultSet.HOLD_CURSORS_OVER_COMMIT,
+            Statement.RETURN_GENERATED_KEYS,
+            null,
+            null),
+        StatementKey.create(
+            "SELECT 1",
+            false,
+            ResultSet.TYPE_FORWARD_ONLY,
+            ResultSet.CONCUR_READ_ONLY,
+            ResultSet.HOLD_CURSORS_OVER_COMMIT,
+            Statement.RETURN_GENERATED_KEYS,
+            null,
+            null));
+  }
+
+  @Test
+  public void typeEquality() throws SQLException {
+    assertNotEquals(
+        StatementKey.create(
+            "SELECT 1",
+            true,
+            ResultSet.TYPE_FORWARD_ONLY,
+            ResultSet.CONCUR_READ_ONLY,
+            ResultSet.HOLD_CURSORS_OVER_COMMIT,
+            Statement.RETURN_GENERATED_KEYS,
+            null,
+            null),
+        StatementKey.create(
+            "SELECT 1",
+            true,
+            ResultSet.TYPE_SCROLL_INSENSITIVE,
+            ResultSet.CONCUR_READ_ONLY,
+            ResultSet.HOLD_CURSORS_OVER_COMMIT,
+            Statement.RETURN_GENERATED_KEYS,
+            null,
+            null));
+  }
+
+  @Test
+  public void concurEquality() throws SQLException {
+    assertNotEquals(
+        StatementKey.create(
+            "SELECT 1",
+            true,
+            ResultSet.TYPE_FORWARD_ONLY,
+            ResultSet.CONCUR_READ_ONLY,
+            ResultSet.HOLD_CURSORS_OVER_COMMIT,
+            Statement.RETURN_GENERATED_KEYS,
+            null,
+            null),
+        StatementKey.create(
+            "SELECT 1",
+            true,
+            ResultSet.TYPE_FORWARD_ONLY,
+            ResultSet.CONCUR_UPDATABLE,
+            ResultSet.HOLD_CURSORS_OVER_COMMIT,
+            Statement.RETURN_GENERATED_KEYS,
+            null,
+            null));
+  }
+
+  @Test
+  public void cursorEquality() throws SQLException {
+    assertNotEquals(
+        StatementKey.create(
+            "SELECT 1",
+            true,
+            ResultSet.TYPE_FORWARD_ONLY,
+            ResultSet.CONCUR_READ_ONLY,
+            ResultSet.HOLD_CURSORS_OVER_COMMIT,
+            Statement.RETURN_GENERATED_KEYS,
+            null,
+            null),
+        StatementKey.create(
+            "SELECT 1",
+            true,
+            ResultSet.TYPE_FORWARD_ONLY,
+            ResultSet.CONCUR_READ_ONLY,
+            ResultSet.CLOSE_CURSORS_AT_COMMIT,
+            Statement.RETURN_GENERATED_KEYS,
+            null,
+            null));
+  }
+
+  @Test
+  public void keysEquality() throws SQLException {
+    assertNotEquals(
+        StatementKey.create(
+            "SELECT 1",
+            true,
+            ResultSet.TYPE_FORWARD_ONLY,
+            ResultSet.CONCUR_READ_ONLY,
+            ResultSet.HOLD_CURSORS_OVER_COMMIT,
+            Statement.RETURN_GENERATED_KEYS,
+            null,
+            null),
+        StatementKey.create(
+            "SELECT 1",
+            true,
+            ResultSet.TYPE_FORWARD_ONLY,
+            ResultSet.CONCUR_READ_ONLY,
+            ResultSet.HOLD_CURSORS_OVER_COMMIT,
+            Statement.NO_GENERATED_KEYS,
+            null,
+            null));
+  }
+
+  @Test
+  public void namesEquality() throws SQLException {
+    assertNotEquals(
+        StatementKey.create(
+            "SELECT 1",
+            true,
+            ResultSet.TYPE_FORWARD_ONLY,
+            ResultSet.CONCUR_READ_ONLY,
+            ResultSet.HOLD_CURSORS_OVER_COMMIT,
+            Statement.RETURN_GENERATED_KEYS,
+            new String[] {"a"},
+            null),
+        StatementKey.create(
+            "SELECT 1",
+            true,
+            ResultSet.TYPE_FORWARD_ONLY,
+            ResultSet.CONCUR_READ_ONLY,
+            ResultSet.HOLD_CURSORS_OVER_COMMIT,
+            Statement.NO_GENERATED_KEYS,
+            new String[] {"b"},
+            null));
+  }
+
+  @Test
+  public void indicesEquality() throws SQLException {
+    assertNotEquals(
+        StatementKey.create(
+            "SELECT 1",
+            true,
+            ResultSet.TYPE_FORWARD_ONLY,
+            ResultSet.CONCUR_READ_ONLY,
+            ResultSet.HOLD_CURSORS_OVER_COMMIT,
+            Statement.RETURN_GENERATED_KEYS,
+            null,
+            new int[] {1}),
+        StatementKey.create(
+            "SELECT 1",
+            true,
+            ResultSet.TYPE_FORWARD_ONLY,
+            ResultSet.CONCUR_READ_ONLY,
+            ResultSet.HOLD_CURSORS_OVER_COMMIT,
+            Statement.NO_GENERATED_KEYS,
+            null,
+            new int[] {2}));
   }
 }
