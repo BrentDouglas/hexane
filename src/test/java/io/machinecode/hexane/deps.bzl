@@ -1,23 +1,23 @@
 load("//:deps.bzl", "jmh_deps", "test_deps")
 
 hexane_test_deps = test_deps + [
-    "@com_h2database_h2//jar",
-    #"@com_oracle_ojdbc7//jar",
-    "@mysql_mysql_connector_java//jar",
-    "@org_apache_derby_derby//jar",
-    "@org_hsqldb_hsqldb//jar",
-    "@org_mariadb_jdbc_mariadb_java_client//jar",
-    "@org_postgresql_postgresql//jar",
+    "@maven//:com_h2database_h2",
+    "@maven//:com_oracle_ojdbc_ojdbc8",
+    "@maven//:mysql_mysql_connector_java",
+    "@maven//:org_apache_derby_derby",
+    "@maven//:org_hsqldb_hsqldb",
+    "@maven//:org_mariadb_jdbc_mariadb_java_client",
+    "@maven//:org_postgresql_postgresql",
 ]
 
 hexane_bench_deps = jmh_deps + [
-    "@com_h2database_h2//jar",
-    #"@com_oracle_ojdbc7//jar",
-    "@mysql_mysql_connector_java//jar",
-    "@org_apache_derby_derby//jar",
-    "@org_hsqldb_hsqldb//jar",
-    "@org_mariadb_jdbc_mariadb_java_client//jar",
-    "@org_postgresql_postgresql//jar",
+    "@maven//:com_h2database_h2",
+    "@maven//:com_oracle_ojdbc_ojdbc8",
+    "@maven//:mysql_mysql_connector_java",
+    "@maven//:org_apache_derby_derby",
+    "@maven//:org_hsqldb_hsqldb",
+    "@maven//:org_mariadb_jdbc_mariadb_java_client",
+    "@maven//:org_postgresql_postgresql",
 ]
 
 database_properties = [

@@ -21,10 +21,10 @@ all_deps = build_deps + test_deps + spring_deps + [
     "//src/main/java/io/machinecode/hexane",
     "//src/main/java/io/machinecode/hexane/ext/spring",
 ] + [
-    "@org_hsqldb_hsqldb//jar",
-    "@javax_inject_javax_inject//jar",
-    "@org_springframework_boot_spring_boot_test//jar",
-    "@org_springframework_spring_test//jar",
+    "@maven//:org_hsqldb_hsqldb",
+    "@maven//:javax_inject_javax_inject",
+    "@maven//:org_springframework_boot_spring_boot_test",
+    "@maven//:org_springframework_spring_test",
 ]
 
 java_library(
@@ -34,12 +34,12 @@ java_library(
 )
 
 atomikos_deps = [
-    "@com_atomikos_atomikos_util//jar",
-    "@com_atomikos_transactions//jar",
-    "@com_atomikos_transactions_api//jar",
-    "@com_atomikos_transactions_jms//jar",
-    "@com_atomikos_transactions_jta//jar",
-    "@com_atomikos_transactions_jdbc//jar",
+    "@maven//:com_atomikos_atomikos_util",
+    "@maven//:com_atomikos_transactions",
+    "@maven//:com_atomikos_transactions_api",
+    "@maven//:com_atomikos_transactions_jms",
+    "@maven//:com_atomikos_transactions_jta",
+    "@maven//:com_atomikos_transactions_jdbc",
 ]
 
 [
@@ -48,10 +48,10 @@ atomikos_deps = [
         srcs = [test],
         test_class = "io.machinecode.hexane.ext.spring." + test[:-5],
         runtime_deps = [
-            "@org_hsqldb_hsqldb//jar",
-            "@org_springframework_spring_jcl//jar",
-            "@org_springframework_spring_jdbc//jar",
-            "@org_springframework_spring_tx//jar",
+            "@maven//:org_hsqldb_hsqldb",
+            "@maven//:org_springframework_spring_jcl",
+            "@maven//:org_springframework_spring_jdbc",
+            "@maven//:org_springframework_spring_tx",
         ],
         #        jvm_flags = ["'%s'" % it for it in database_properties] + [
         #            "'-Dcom.google.testing.junit.runner.shouldInstallTestSecurityManager=false'",
@@ -72,9 +72,9 @@ atomikos_deps = [
         ],
         test_class = "io.machinecode.hexane.ext.spring." + test[:-5],
         runtime_deps = [
-            "@org_springframework_spring_jcl//jar",
-            "@org_springframework_spring_jdbc//jar",
-            "@org_springframework_spring_tx//jar",
+            "@maven//:org_springframework_spring_jcl",
+            "@maven//:org_springframework_spring_jdbc",
+            "@maven//:org_springframework_spring_tx",
         ],
         deps = all_deps + atomikos_deps + [
             "//src/test/java/io/machinecode/hexane/ext/spring",
@@ -89,14 +89,14 @@ atomikos_deps = [
         srcs = [test],
         test_class = "io.machinecode.hexane.ext.spring." + test[:-5],
         runtime_deps = [
-            "@org_hsqldb_hsqldb//jar",
-            "@org_springframework_spring_jcl//jar",
-            "@org_springframework_spring_jdbc//jar",
-            "@org_springframework_spring_tx//jar",
-            "@org_slf4j_slf4j_api//jar",
+            "@maven//:org_hsqldb_hsqldb",
+            "@maven//:org_slf4j_slf4j_api",
+            "@maven//:org_springframework_spring_jcl",
+            "@maven//:org_springframework_spring_jdbc",
+            "@maven//:org_springframework_spring_tx",
         ],
         deps = all_deps + [
-            "@org_codehaus_btm_btm//jar",
+            "@maven//:org_codehaus_btm_btm",
             "//src/test/java/io/machinecode/hexane/ext/spring",
         ],
     )

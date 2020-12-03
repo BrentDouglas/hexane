@@ -39,7 +39,7 @@ import java.util.concurrent.Executor;
 final class CheckedConnection implements Connection {
   private final Terminal xa;
   private final Pooled<?> val;
-  private Connection delegate;
+  private final Connection delegate;
   private final Defaults defaults;
   private final StatementCache cache;
   private int flags = 0;

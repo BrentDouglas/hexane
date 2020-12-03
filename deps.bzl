@@ -1,16 +1,16 @@
 build_deps = [
-    "@org_slf4j_slf4j_api//jar:neverlink",
-    "@org_apache_logging_log4j_log4j_api//jar:neverlink",
-    "@org_jboss_logging_jboss_logging//jar:neverlink",
+    "@maven//:org_slf4j_slf4j_api",
+    "@maven//:org_apache_logging_log4j_log4j_api",
+    "@maven//:org_jboss_logging_jboss_logging",
 ]
 
 test_deps = [
-    "@junit_junit//jar",
-    "@org_mockito_mockito_all//jar",
+    "@maven//:junit_junit",
+    "@maven//:org_mockito_mockito_all",
 ]
 
 jmh_deps = [
-    "@org_openjdk_jmh_jmh_core//jar",
-    "@net_sf_jopt_simple_jopt_simple//jar",
-    "@org_apache_commons_commons_math3//jar",
+    "@jmh_m2//:org_openjdk_jmh_jmh_core",
+    "@jmh_m2//:net_sf_jopt_simple_jopt_simple",
+    "@jmh_m2//:org_apache_commons_commons_math3",
 ]

@@ -76,7 +76,7 @@ coverage: build-coverage
 .PHONY: tools
 tools:
 	@bazel build \
-		@io_machinecode_tools//src/main/java/io/machinecode/tools/devsrv \
+		@io_machinecode_devserver//:devserver \
 		@io_machinecode_tools//tools:watch
 
 .PHONY: doc

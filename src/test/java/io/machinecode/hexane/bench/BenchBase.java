@@ -151,7 +151,7 @@ abstract class BenchBase {
   }
 
   @TearDown(Level.Trial)
-  public void teadDown() throws Exception {
+  public void tearDown() throws Exception {
     close.close();
   }
 }

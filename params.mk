@@ -1,13 +1,13 @@
 
 # Paths
 
-BAZEL_BIN := $(shell bazel info bazel-bin)
-BAZEL_EXEC_ROOT := $(shell bazel info execution_root)
+BAZEL_BIN := $(PWD)/bazel-bin
+BAZEL_EXEC_ROOT := $(PWD)/bazel-hexane
 
 # Commands
 
 WATCH := python3 $(BAZEL_EXEC_ROOT)/external/io_machinecode_tools/tools/watch.py
-DEV_SRV = DEFAULT_JVM_DEBUG_SUSPEND=n bash $(BAZEL_BIN)/external/io_machinecode_tools/src/main/java/io/machinecode/tools/devsrv/devsrv
+DEV_SRV = DEFAULT_JVM_DEBUG_SUSPEND=n bash $(BAZEL_BIN)/external/io_machinecode_devserver/devserver
 open := $(shell if [ "$$(uname)" == "Darwin" ]; then echo "open"; else echo "xdg-open"; fi)
 
 # Ports

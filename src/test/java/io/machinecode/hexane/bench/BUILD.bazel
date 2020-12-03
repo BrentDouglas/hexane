@@ -19,17 +19,17 @@ filegroup(
 bench_deps = [
     "//src/main/java/io/machinecode/hexane",
     "//src/test/java/io/machinecode/hexane",
-    "@com_zaxxer_hikaricp//jar",
-    "@com_mchange_mchange_commons_java//jar",
-    "@com_mchange_c3p0//jar",
-    "@commons_logging_commons_logging//jar",
-    "@io_agroal_agroal_api//jar",
-    "@io_agroal_agroal_pool//jar",
+    "@maven//:com_zaxxer_HikariCP",
+    "@maven//:com_mchange_mchange_commons_java",
+    "@maven//:com_mchange_c3p0",
+    "@maven//:commons_logging_commons_logging",
+    "@maven//:io_agroal_agroal_api",
+    "@maven//:io_agroal_agroal_pool",
     "@io_machinecode_tools//tools/java:jmh",
-    "@org_apache_commons_commons_pool2//jar",
-    "@org_apache_commons_commons_dbcp2//jar",
-    "@org_apache_tomcat_tomcat_jdbc//jar",
-    "@org_apache_tomcat_tomcat_juli//jar",
+    "@maven//:org_apache_commons_commons_pool2",
+    "@maven//:org_apache_commons_commons_dbcp2",
+    "@maven//:org_apache_tomcat_tomcat_jdbc",
+    "@maven//:org_apache_tomcat_tomcat_juli",
 ]
 
 java_library(

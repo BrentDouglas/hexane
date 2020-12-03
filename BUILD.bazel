@@ -43,11 +43,11 @@ to_tar(
     dir = "javadoc",
 )
 
-to_tar(
-    name = "rules-tar",
-    srcs = ["//tools:docs"],
-    dir = "rules",
-)
+#to_tar(
+#    name = "rules-tar",
+#    srcs = ["//tools:docs"],
+#    dir = "rules",
+#)
 
 pkg_app(
     name = "site",
@@ -62,7 +62,7 @@ pkg_app(
     index_html = "//src/main/site:html",
     deps = [
         ":javadoc-tar",
-        ":rules-tar",
+        #        ":rules-tar",
         "//src/main/adoc:html",
         "//src/main/adoc:pdf",
     ],

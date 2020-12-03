@@ -1,36 +1,41 @@
 workspace(name = "io_machinecode_hexane")
 
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
 #local_repository(
 #    name = "io_machinecode_tools",
 #    path = "../tools",
 #)
 
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-
-io_machinecode_tools_version = "24c61f75f29fac999f006a18f85f6abd656e5d30"
+io_machinecode_tools_version = "5d4813cba6e7f8ab66610162f0db9057057de325"
 
 http_archive(
     name = "io_machinecode_tools",
-    sha256 = "265251ca6efc641a727e42f64320401a75b970384f60105961111b78021a35c7",
+    sha256 = "f189b432434f1bda8046da4347d0139f451c2bce52bc5c5b66a968ba1039718b",
     strip_prefix = "tools-" + io_machinecode_tools_version,
-    urls = ["https://github.com/BrentDouglas/tools/archive/%s.tar.gz" % io_machinecode_tools_version],
+    urls = [
+        "https://mirror.bazel.build/github.com/BrentDouglas/tools/archive/%s.tar.gz" % io_machinecode_tools_version,
+        "https://github.com/BrentDouglas/tools/archive/%s.tar.gz" % io_machinecode_tools_version,
+    ],
 )
 
-load("@io_machinecode_tools//tools/java:devserver.bzl", "devserver_certificates")
+load("@io_machinecode_tools//imports:java_repositories.bzl", "java_repositories")
 
-devserver_certificates(
-    name = "io_machinecode_devserver_certificates",
+java_repositories()
+
+load("@io_machinecode_tools//tools/java:devserver.bzl", "devserver")
+
+devserver(
+    name = "io_machinecode_devserver",
     hosts = [
         "localhost",
         "0.0.0.0",
     ],
 )
 
-load("@io_machinecode_tools//tools/java:maven_jar.bzl", "maven_jar")
+load("@io_machinecode_tools//imports:stardoc_repositories.bzl", "stardoc_repositories")
 
-load("@io_machinecode_tools//imports:skydoc_repositories.bzl", "skydoc_repositories")
-
-skydoc_repositories()
+stardoc_repositories()
 
 load("@io_machinecode_tools//imports:nodejs_repositories.bzl", "nodejs_repositories")
 
@@ -52,44 +57,9 @@ load("@io_bazel_rules_sass//:defs.bzl", "sass_repositories")
 
 sass_repositories()
 
-load("@io_bazel_skydoc//skylark:skylark.bzl", "skydoc_repositories")
+load("@io_bazel_stardoc//:setup.bzl", "stardoc_repositories")
 
-skydoc_repositories()
-
-junit_version = "4.12"
-
-mockito_version = "1.10.19"
-
-maven_jar(
-    name = "junit_junit",
-    artifact = "junit:junit:" + junit_version,
-)
-
-maven_jar(
-    name = "org_mockito_mockito_all",
-    artifact = "org.mockito:mockito-all:" + mockito_version,
-)
-
-slf4j_version = "1.7.25"
-
-maven_jar(
-    name = "org_slf4j_slf4j_api",
-    artifact = "org.slf4j:slf4j-api:" + slf4j_version,
-)
-
-log4j_version = "2.11.1"
-
-maven_jar(
-    name = "org_apache_logging_log4j_log4j_api",
-    artifact = "org.apache.logging.log4j:log4j-api:" + log4j_version,
-)
-
-jboss_logging_version = "3.3.2.Final"
-
-maven_jar(
-    name = "org_jboss_logging_jboss_logging",
-    artifact = "org.jboss.logging:jboss-logging:" + jboss_logging_version,
-)
+stardoc_repositories()
 
 load("@io_machinecode_tools//imports:build_repositories.bzl", "build_repositories")
 
@@ -107,7 +77,7 @@ load("@io_machinecode_tools//imports:go_repositories.bzl", "go_repositories")
 
 go_repositories()
 
-load("@io_bazel_rules_go//go:def.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -121,22 +91,115 @@ load("@io_machinecode_tools//imports:devsrv_repositories.bzl", "devsrv_repositor
 
 devsrv_repositories()
 
-load("@io_machinecode_tools//imports:undertow_repositories.bzl", "undertow_repositories")
-
-undertow_repositories()
-
 load("@io_machinecode_tools//imports:jmh_repositories.bzl", "jmh_repositories")
 
 jmh_repositories()
 
-load("//tools/include:database_repositories.bzl", "database_repositories")
+junit_version = "4.12"
 
-database_repositories()
+mockito_version = "1.10.19"
 
-load("//tools/include:pool_repositories.bzl", "pool_repositories")
+slf4j_version = "1.7.25"
 
-pool_repositories()
+log4j_version = "2.11.1"
 
-load("//tools/include:spring_repositories.bzl", "spring_repositories")
+jboss_logging_version = "3.3.2.Final"
 
-spring_repositories()
+h2_version = "1.4.197"
+
+oracle_version = "19.3.0.0"
+
+mysql_version = "8.0.12"
+
+hsqldb_version = "2.4.1"
+
+derby_version = "10.14.2.0"
+
+mariadb_version = "2.3.0"
+
+postgresql_version = "42.2.5"
+
+hikari_version = "3.2.0"
+
+c3p0_version = "0.9.5.2"
+
+mchange_commons_java_version = "0.2.15"
+
+commons_dbcp2_version = "2.5.0"
+
+commons_pool_version = "2.6.0"
+
+commons_logging_version = "1.2"
+
+agroal_version = "1.2"
+
+tomcat_version = "9.0.12"
+
+javax_inject_version = "1"
+
+jms_api_version = "2.0.1"
+
+spring_boot_version = "2.1.0.RELEASE"
+
+spring_version = "5.1.2.RELEASE"
+
+javax_transaction_version = "1.3"
+
+bitronix_version = "2.1.4"
+
+atomikos_version = "4.0.6"
+
+load("@io_machinecode_tools//:defs.bzl", "maven_repositories")
+load("@rules_jvm_external//:defs.bzl", "maven_install")
+load("@rules_jvm_external//:specs.bzl", "maven")
+
+maven_install(
+    repositories = maven_repositories,
+    artifacts = [
+        "junit:junit:" + junit_version,
+        "org.mockito:mockito-all:" + mockito_version,
+        maven.artifact("org.slf4j", "slf4j-api", slf4j_version, neverlink = True),
+        maven.artifact("org.apache.logging.log4j", "log4j-api", log4j_version, neverlink = True),
+        maven.artifact("org.jboss.logging", "jboss-logging", jboss_logging_version, neverlink = True),
+        "com.h2database:h2:" + h2_version,
+        "com.oracle.ojdbc:ojdbc8:" + oracle_version,
+        "mysql:mysql-connector-java:" + mysql_version,
+        "org.apache.derby:derby:" + derby_version,
+        "org.hsqldb:hsqldb:" + hsqldb_version,
+        "org.mariadb.jdbc:mariadb-java-client:" + mariadb_version,
+        "org.postgresql:postgresql:" + postgresql_version,
+        "com.zaxxer:HikariCP:" + hikari_version,
+        "com.mchange:c3p0:" + c3p0_version,
+        "com.mchange:mchange-commons-java:" + mchange_commons_java_version,
+        "org.apache.commons:commons-dbcp2:" + commons_dbcp2_version,
+        "org.apache.commons:commons-pool2:" + commons_pool_version,
+        "commons-logging:commons-logging:" + commons_logging_version,
+        "io.agroal:agroal-api:" + agroal_version,
+        "io.agroal:agroal-pool:" + agroal_version,
+        "org.apache.tomcat:tomcat-jdbc:" + tomcat_version,
+        "org.apache.tomcat:tomcat-juli:" + tomcat_version,
+        "javax.inject:javax.inject:" + javax_inject_version,
+        "javax.jms:javax.jms-api:" + jms_api_version,
+        "org.springframework.boot:spring-boot:" + spring_boot_version,
+        "org.springframework.boot:spring-boot-autoconfigure:" + spring_boot_version,
+        "org.springframework.boot:spring-boot-test:" + spring_boot_version,
+        "org.springframework:spring-aop:" + spring_version,
+        "org.springframework:spring-context:" + spring_version,
+        "org.springframework:spring-beans:" + spring_version,
+        "org.springframework:spring-core:" + spring_version,
+        "org.springframework:spring-expression:" + spring_version,
+        "org.springframework:spring-jcl:" + spring_version,
+        "org.springframework:spring-jdbc:" + spring_version,
+        "org.springframework:spring-tx:" + spring_version,
+        "org.springframework:spring-test:" + spring_version,
+        "javax.transaction:javax.transaction-api:" + javax_transaction_version,
+        "org.codehaus.btm:btm:" + bitronix_version,
+        "com.atomikos:atomikos-util:" + atomikos_version,
+        "com.atomikos:transactions:" + atomikos_version,
+        "com.atomikos:transactions-api:" + atomikos_version,
+        "com.atomikos:transactions-jms:" + atomikos_version,
+        "com.atomikos:transactions-jta:" + atomikos_version,
+        "com.atomikos:transactions-jdbc:" + atomikos_version,
+    ],
+    fetch_sources = True,
+)
