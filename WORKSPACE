@@ -162,12 +162,35 @@ load("@rules_jvm_external//:defs.bzl", "maven_install")
 load("@rules_jvm_external//:specs.bzl", "maven")
 
 maven_install(
+    name = "provided_m2",
+    artifacts = [
+        maven.artifact(
+            "org.slf4j",
+            "slf4j-api",
+            slf4j_version,
+            neverlink = True,
+        ),
+        maven.artifact(
+            "org.apache.logging.log4j",
+            "log4j-api",
+            log4j_version,
+            neverlink = True,
+        ),
+        maven.artifact(
+            "org.jboss.logging",
+            "jboss-logging",
+            jboss_logging_version,
+            neverlink = True,
+        ),
+    ],
+    fetch_sources = True,
+    repositories = maven_repositories,
+)
+
+maven_install(
     artifacts = [
         "junit:junit:" + junit_version,
         "org.mockito:mockito-core:" + mockito_version,
-        #        maven.artifact("org.slf4j", "slf4j-api", slf4j_version, neverlink = True),
-        #        maven.artifact("org.apache.logging.log4j", "log4j-api", log4j_version, neverlink = True),
-        #        maven.artifact("org.jboss.logging", "jboss-logging", jboss_logging_version, neverlink = True),
         "org.slf4j:slf4j-api:" + slf4j_version,
         "org.apache.logging.log4j:log4j-api:" + log4j_version,
         "org.jboss.logging:jboss-logging:" + jboss_logging_version,

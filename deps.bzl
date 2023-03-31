@@ -1,7 +1,7 @@
 build_deps = [
-    "@maven//:org_slf4j_slf4j_api",
-    "@maven//:org_apache_logging_log4j_log4j_api",
-    "@maven//:org_jboss_logging_jboss_logging",
+    "@provided_m2//:org_slf4j_slf4j_api",
+    "@provided_m2//:org_apache_logging_log4j_log4j_api",
+    "@provided_m2//:org_jboss_logging_jboss_logging",
 ]
 
 test_deps = [
