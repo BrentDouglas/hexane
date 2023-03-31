@@ -16,7 +16,7 @@
  */
 package io.machinecode.hexane;
 
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -27,7 +27,9 @@ import java.sql.SQLException;
 import org.h2.jdbc.JdbcPreparedStatement;
 import org.junit.Test;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 public class CheckedPreparedStatementTest
     extends CheckedTestBase<PreparedStatement, CheckedPreparedStatement> {
 

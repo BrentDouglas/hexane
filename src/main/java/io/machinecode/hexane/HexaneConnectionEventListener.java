@@ -19,7 +19,9 @@ package io.machinecode.hexane;
 import javax.sql.ConnectionEvent;
 import javax.sql.ConnectionEventListener;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 class HexaneConnectionEventListener<C> implements ConnectionEventListener {
   final BasePool<C> pool;
   final Pooled<C> item;

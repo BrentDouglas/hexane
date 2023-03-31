@@ -18,7 +18,9 @@ package io.machinecode.hexane;
 
 import java.sql.Connection;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 public enum TransactionIsolationType {
   TRANSACTION_NONE(Connection.TRANSACTION_NONE),
   TRANSACTION_READ_UNCOMMITTED(Connection.TRANSACTION_READ_UNCOMMITTED),

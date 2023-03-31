@@ -22,7 +22,9 @@ import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 class CheckedStatement<S extends Statement> implements Statement {
   final Terminal xa;
   final Connection conn;

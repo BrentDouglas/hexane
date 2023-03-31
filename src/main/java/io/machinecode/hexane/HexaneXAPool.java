@@ -27,7 +27,9 @@ import javax.sql.StatementEventListener;
 import javax.sql.XAConnection;
 import javax.sql.XADataSource;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 final class HexaneXAPool extends BasePool<XAConnection> {
   private final XADataSource dataSource;
   private final Map<Pooled<XAConnection>, ConnectionEventListener> connectionListeners =

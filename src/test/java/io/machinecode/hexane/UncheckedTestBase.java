@@ -36,7 +36,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 public abstract class UncheckedTestBase<R, D extends R> extends Assert {
 
   final Class<R> realType;
@@ -73,7 +75,7 @@ public abstract class UncheckedTestBase<R, D extends R> extends Assert {
   public void testNormalCompletes() throws Exception {
     final Set<String> ignore = new HashSet<>(Arrays.asList(getIgnored()));
     for (final Method method : realType.getMethods()) {
-      if (ignore.contains(method.getName())) {
+      if (ignore.contains(method.getName()) || method.isDefault()) {
         continue;
       }
       setUp();
@@ -95,7 +97,7 @@ public abstract class UncheckedTestBase<R, D extends R> extends Assert {
   public void testNonFatalThrows() throws Throwable {
     final Set<String> ignore = new HashSet<>(Arrays.asList(getIgnored()));
     for (final Method method : realType.getMethods()) {
-      if (ignore.contains(method.getName())) {
+      if (ignore.contains(method.getName()) || method.isDefault()) {
         continue;
       }
       setUp();

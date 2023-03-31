@@ -22,7 +22,9 @@ package io.machinecode.hexane;
  * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
  */
 public final class Hexane {
-  /** @return A configuration builder */
+  /**
+   * @return A configuration builder
+   */
   public static Config.Builder builder() {
     return new Config.Builder();
   }

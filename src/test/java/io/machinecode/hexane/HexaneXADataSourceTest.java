@@ -16,7 +16,7 @@
  */
 package io.machinecode.hexane;
 
-import static org.mockito.Matchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -29,7 +29,9 @@ import javax.sql.XADataSource;
 import org.junit.Before;
 import org.junit.Test;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 public class HexaneXADataSourceTest
     extends CommonDataSourceTestBase<XADataSource, XAConnection, HexaneXADataSource, HexaneXAPool> {
   Connection conn;

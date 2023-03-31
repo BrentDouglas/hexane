@@ -22,7 +22,9 @@ import static org.mockito.Mockito.when;
 import javax.sql.PooledConnection;
 import org.junit.Before;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 public class HexanePooledConnectionTest
     extends PooledConnectionTestBase<PooledConnection, HexanePooledConnection> {
 

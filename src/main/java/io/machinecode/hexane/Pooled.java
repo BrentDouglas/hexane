@@ -22,7 +22,9 @@ import java.util.Collections;
 import java.util.IdentityHashMap;
 import java.util.Set;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 final class Pooled<T> implements AutoCloseable {
   private final BasePool<T> pool;
   private final T value;

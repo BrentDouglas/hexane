@@ -19,7 +19,9 @@ package io.machinecode.hexane.ext.spring;
 import io.machinecode.hexane.HexaneDataSource;
 import org.springframework.boot.jdbc.metadata.AbstractDataSourcePoolMetadata;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 final class HexaneDataSourcePoolMetaData extends AbstractDataSourcePoolMetadata<HexaneDataSource> {
   public HexaneDataSourcePoolMetaData(final HexaneDataSource dataSource) {
     super(dataSource);

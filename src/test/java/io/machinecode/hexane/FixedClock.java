@@ -16,7 +16,9 @@
  */
 package io.machinecode.hexane;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 class FixedClock extends Clock {
   static long time;
 

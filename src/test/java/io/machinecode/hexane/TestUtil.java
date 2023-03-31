@@ -22,7 +22,9 @@ import java.sql.SQLFeatureNotSupportedException;
 import java.sql.SQLNonTransientConnectionException;
 import java.util.Collections;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 class TestUtil {
 
   static SQLException getNormal() {

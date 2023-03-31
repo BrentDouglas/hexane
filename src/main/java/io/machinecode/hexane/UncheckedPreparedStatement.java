@@ -39,7 +39,9 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Calendar;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 class UncheckedPreparedStatement<S extends PreparedStatement> extends UncheckedStatement<S>
     implements PreparedStatement {
 

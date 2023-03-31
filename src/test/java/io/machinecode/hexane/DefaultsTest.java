@@ -26,7 +26,9 @@ import java.util.function.BiConsumer;
 import org.junit.Ignore;
 import org.junit.Test;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 public class DefaultsTest extends PerDb {
 
   @Test

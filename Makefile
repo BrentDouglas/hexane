@@ -9,6 +9,7 @@ help:
 	@echo "   up                         - Set up databases"
 	@echo "   down                       - Clean up databases"
 	@echo "   build                      - Build the library"
+	@echo "   format                     - Format the code"
 	@echo "   check                      - Run linters"
 	@echo "   test                       - Run the tests"
 	@echo "   coverage                   - Get test coverage"
@@ -35,11 +36,17 @@ build:
 
 .PHONY: format
 format:
-	bazel build @com_github_bazelbuild_buildtools//buildifier \
+	@bazel build @com_github_bazelbuild_buildtools//buildifier \
 				@google_java_format//jar
-	find . -type f \( -name BUILD -or -name BUILD.bazel \) \
-		| xargs $(BAZEL_BIN)/external/com_github_bazelbuild_buildtools/buildifier/*/buildifier
-	java -jar $(BAZEL_EXEC_ROOT)/external/google_java_format/jar/downloaded.jar -i \
+	@find . -type f \( -name BUILD -or -name BUILD.bazel \) \
+		| bazel run //:buildifier
+	@java -jar \
+		--add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED \
+		--add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED \
+		--add-exports jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED \
+		--add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED \
+		--add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED \
+		$$(bazel info output_base)/external/google_java_format/jar/downloaded.jar -i \
 		$$(find src/ -type f -name '*.java')
 
 .PHONY: check

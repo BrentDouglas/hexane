@@ -33,7 +33,9 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 @Configuration
 @AutoConfigureBefore({DataSourceAutoConfiguration.class})
 @EnableConfigurationProperties({DataSourceProperties.class, HexaneProperties.class})

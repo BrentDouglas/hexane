@@ -36,7 +36,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 @Configuration
 @AutoConfigureBefore({DataSourceAutoConfiguration.class, XADataSourceAutoConfiguration.class})
 @EnableConfigurationProperties({DataSourceProperties.class, HexaneProperties.class})

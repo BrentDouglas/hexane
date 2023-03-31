@@ -24,7 +24,9 @@ import javax.sql.DataSource;
 import javax.sql.XAConnection;
 import javax.sql.XADataSource;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 public class TestXADataSource implements XADataSource {
 
   private final DataSource db;

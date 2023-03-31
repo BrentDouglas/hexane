@@ -16,7 +16,9 @@
  */
 package io.machinecode.hexane;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 class InternalListener {
   static final InternalListener INSTANCE = new InternalListener();
 

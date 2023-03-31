@@ -37,7 +37,9 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Map;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 class CheckedCallableStatement extends CheckedPreparedStatement<CallableStatement>
     implements CallableStatement {
 

@@ -16,7 +16,7 @@
  */
 package io.machinecode.hexane;
 
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -33,7 +33,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 public class HexaneManagedConnectionTest extends Assert {
 
   BasePool<Connection> pool;

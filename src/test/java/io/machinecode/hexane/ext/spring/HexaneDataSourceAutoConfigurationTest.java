@@ -27,7 +27,9 @@ import org.junit.After;
 import org.junit.BeforeClass;
 import org.springframework.boot.test.context.SpringBootTest;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 @SpringBootTest(
     classes = {
       HexaneDataSourceAutoConfiguration.class,

@@ -28,7 +28,9 @@ import java.util.HashSet;
 import java.util.Set;
 import org.junit.Test;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 public abstract class CheckedTestBase<R, D extends R> extends UncheckedTestBase<R, D> {
 
   public CheckedTestBase(final Class<R> realType, final Class<D> delegateType) {
@@ -39,7 +41,7 @@ public abstract class CheckedTestBase<R, D extends R> extends UncheckedTestBase<
   public void testFatalCallsKill() throws Throwable {
     final Set<String> ignore = new HashSet<>(Arrays.asList(getIgnored()));
     for (final Method method : realType.getMethods()) {
-      if (ignore.contains(method.getName())) {
+      if (ignore.contains(method.getName()) || method.isDefault()) {
         continue;
       }
       setUp();

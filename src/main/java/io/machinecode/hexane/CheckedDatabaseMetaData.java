@@ -22,7 +22,9 @@ import java.sql.ResultSet;
 import java.sql.RowIdLifetime;
 import java.sql.SQLException;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 final class CheckedDatabaseMetaData implements DatabaseMetaData {
   private final Terminal xa;
   private final Connection conn;

@@ -39,7 +39,9 @@ import org.springframework.boot.context.properties.source.ConfigurationPropertyN
 import org.springframework.boot.context.properties.source.MapConfigurationPropertySource;
 import org.springframework.util.ClassUtils;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 class SpringUtil {
 
   static DataSource getDriverDataSource(final HexaneProperties properties)

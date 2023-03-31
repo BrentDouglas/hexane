@@ -25,7 +25,9 @@ import java.util.logging.Logger;
 import javax.sql.CommonDataSource;
 import javax.sql.DataSource;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 abstract class BaseDataSource<C, P extends BasePool<C>, D extends CommonDataSource>
     implements CommonDataSource, DataSource, AutoCloseable {
   P pool;

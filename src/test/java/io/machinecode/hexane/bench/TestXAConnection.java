@@ -24,7 +24,9 @@ import javax.sql.StatementEventListener;
 import javax.sql.XAConnection;
 import javax.transaction.xa.XAResource;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 public class TestXAConnection implements XAConnection {
   private final DataSource db;
 

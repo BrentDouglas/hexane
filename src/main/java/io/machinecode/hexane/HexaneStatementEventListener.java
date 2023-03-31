@@ -19,7 +19,9 @@ package io.machinecode.hexane;
 import javax.sql.StatementEvent;
 import javax.sql.StatementEventListener;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 class HexaneStatementEventListener<C> implements StatementEventListener {
   final BasePool<C> pool;
   final Pooled<C> item;

@@ -96,8 +96,8 @@ atomikos_deps = [
             "@maven//:org_springframework_spring_tx",
         ],
         deps = all_deps + [
-            "@maven//:org_codehaus_btm_btm",
             "//src/test/java/io/machinecode/hexane/ext/spring",
+            "@maven//:org_codehaus_btm_btm",
         ],
     )
     for test in glob(["*Test.java"])

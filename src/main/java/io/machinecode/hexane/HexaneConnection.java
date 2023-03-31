@@ -37,7 +37,9 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 final class HexaneConnection extends Terminal implements Connection {
   private final Pooled<Connection> val;
   private Connection delegate;

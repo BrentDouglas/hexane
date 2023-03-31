@@ -27,7 +27,9 @@ import org.junit.BeforeClass;
 import org.springframework.boot.autoconfigure.transaction.jta.JtaAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 @SpringBootTest(
     classes = {
       HexaneXADataSourceAutoConfiguration.class,

@@ -27,7 +27,9 @@ import javax.sql.ConnectionPoolDataSource;
 import javax.sql.PooledConnection;
 import javax.sql.StatementEventListener;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 final class HexanePooledPool extends BasePool<PooledConnection> {
   private final ConnectionPoolDataSource dataSource;
   private final Map<Pooled<PooledConnection>, ConnectionEventListener> connectionListeners =

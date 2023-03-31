@@ -45,7 +45,9 @@ import org.postgresql.ds.PGConnectionPoolDataSource;
 import org.postgresql.ds.PGSimpleDataSource;
 import org.postgresql.xa.PGXADataSource;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 public class TestBase extends Assert {
 
   static List<Setup> dataSources;

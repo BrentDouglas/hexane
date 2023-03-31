@@ -26,7 +26,9 @@ import java.sql.Statement;
 import java.util.Arrays;
 import java.util.Base64;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 final class StatementKey {
 
   final byte[] value;

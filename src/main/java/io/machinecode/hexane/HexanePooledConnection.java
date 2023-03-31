@@ -24,7 +24,9 @@ import javax.sql.ConnectionEventListener;
 import javax.sql.PooledConnection;
 import javax.sql.StatementEventListener;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 final class HexanePooledConnection extends Terminal implements PooledConnection {
   private final Pooled<PooledConnection> val;
   private PooledConnection delegate;

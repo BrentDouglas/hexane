@@ -6,7 +6,7 @@ build_deps = [
 
 test_deps = [
     "@maven//:junit_junit",
-    "@maven//:org_mockito_mockito_all",
+    "@maven//:org_mockito_mockito_core",
 ]
 
 jmh_deps = [

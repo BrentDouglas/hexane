@@ -25,7 +25,9 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 @ConfigurationProperties(prefix = "spring.datasource.hexane")
 class HexaneProperties implements BeanClassLoaderAware {
   private ClassLoader classLoader;

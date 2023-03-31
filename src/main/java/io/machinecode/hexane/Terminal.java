@@ -19,7 +19,9 @@ package io.machinecode.hexane;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 abstract class Terminal {
 
   final Config config;

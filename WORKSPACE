@@ -7,11 +7,11 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 #    path = "../tools",
 #)
 
-io_machinecode_tools_version = "5d4813cba6e7f8ab66610162f0db9057057de325"
+io_machinecode_tools_version = "cb15a98dab11b60895d2cf09dc86505b0ce555f6"
 
 http_archive(
     name = "io_machinecode_tools",
-    sha256 = "f189b432434f1bda8046da4347d0139f451c2bce52bc5c5b66a968ba1039718b",
+    sha256 = "62d21f1ebb38426da3548a29f12ac680b2c29434eca5221d3d7979f19e39b71a",
     strip_prefix = "tools-" + io_machinecode_tools_version,
     urls = [
         "https://mirror.bazel.build/github.com/BrentDouglas/tools/archive/%s.tar.gz" % io_machinecode_tools_version,
@@ -41,11 +41,15 @@ load("@io_machinecode_tools//imports:nodejs_repositories.bzl", "nodejs_repositor
 
 nodejs_repositories()
 
+load("@build_bazel_rules_nodejs//:repositories.bzl", "build_bazel_rules_nodejs_dependencies")
+
+build_bazel_rules_nodejs_dependencies()
+
 load("@io_machinecode_tools//imports:nodejs_binary_repositories.bzl", "nodejs_binary_repositories")
 
 nodejs_binary_repositories()
 
-load("@build_bazel_rules_nodejs//:defs.bzl", "yarn_install")
+load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
 
 yarn_install(
     name = "npm",
@@ -73,6 +77,10 @@ load("@io_machinecode_tools//imports:format_repositories.bzl", "format_repositor
 
 format_repositories()
 
+load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
+
+protobuf_deps()
+
 load("@io_machinecode_tools//imports:go_repositories.bzl", "go_repositories")
 
 go_repositories()
@@ -81,7 +89,7 @@ load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_depe
 
 go_rules_dependencies()
 
-go_register_toolchains()
+go_register_toolchains(version = "1.20.2")
 
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 
@@ -97,7 +105,7 @@ jmh_repositories()
 
 junit_version = "4.12"
 
-mockito_version = "1.10.19"
+mockito_version = "5.2.0"
 
 slf4j_version = "1.7.25"
 
@@ -154,13 +162,15 @@ load("@rules_jvm_external//:defs.bzl", "maven_install")
 load("@rules_jvm_external//:specs.bzl", "maven")
 
 maven_install(
-    repositories = maven_repositories,
     artifacts = [
         "junit:junit:" + junit_version,
-        "org.mockito:mockito-all:" + mockito_version,
-        maven.artifact("org.slf4j", "slf4j-api", slf4j_version, neverlink = True),
-        maven.artifact("org.apache.logging.log4j", "log4j-api", log4j_version, neverlink = True),
-        maven.artifact("org.jboss.logging", "jboss-logging", jboss_logging_version, neverlink = True),
+        "org.mockito:mockito-core:" + mockito_version,
+        #        maven.artifact("org.slf4j", "slf4j-api", slf4j_version, neverlink = True),
+        #        maven.artifact("org.apache.logging.log4j", "log4j-api", log4j_version, neverlink = True),
+        #        maven.artifact("org.jboss.logging", "jboss-logging", jboss_logging_version, neverlink = True),
+        "org.slf4j:slf4j-api:" + slf4j_version,
+        "org.apache.logging.log4j:log4j-api:" + log4j_version,
+        "org.jboss.logging:jboss-logging:" + jboss_logging_version,
         "com.h2database:h2:" + h2_version,
         "com.oracle.ojdbc:ojdbc8:" + oracle_version,
         "mysql:mysql-connector-java:" + mysql_version,
@@ -202,4 +212,5 @@ maven_install(
         "com.atomikos:transactions-jdbc:" + atomikos_version,
     ],
     fetch_sources = True,
+    repositories = maven_repositories,
 )

@@ -3,8 +3,13 @@ load("@io_machinecode_tools//tools:util.bzl", "to_tar")
 load("@io_machinecode_tools//tools:ui.bzl", "pkg_app")
 load("@io_machinecode_tools//tools/java:javadoc.bzl", "java_doc")
 load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
+load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
 
 package(default_visibility = ["//visibility:public"])
+
+buildifier(
+    name = "buildifier",
+)
 
 filegroup(
     name = "coverage_data",

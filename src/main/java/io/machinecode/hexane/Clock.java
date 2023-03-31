@@ -18,7 +18,9 @@ package io.machinecode.hexane;
 
 import java.util.concurrent.TimeUnit;
 
-/** @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a> */
+/**
+ * @author <a href="mailto:brent.n.douglas@gmail.com">Brent Douglas</a>
+ */
 class Clock {
   static volatile Clock INSTANCE = new Clock();
 
