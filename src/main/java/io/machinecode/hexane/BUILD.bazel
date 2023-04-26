@@ -11,5 +11,8 @@ java_filegroup(
 java_library(
     name = "hexane",
     srcs = [":srcs"],
+    tags = [
+        "maven_coordinates=io.machinecode.hexane:hexane-core:{pom_version}",
+    ],
     deps = build_deps,
 )

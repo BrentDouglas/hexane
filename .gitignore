@@ -16,7 +16,6 @@ target
 *.iws
 .idea/
 .ijwb/
-idea
 
 # Eclipse
 .metadata

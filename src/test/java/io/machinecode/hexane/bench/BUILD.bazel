@@ -1,5 +1,6 @@
 load("//src/test/java/io/machinecode/hexane:deps.bzl", "database_properties", "hexane_bench_deps", "hexane_test_deps")
 load("//tools/java:java_filegroup.bzl", "java_filegroup")
+load("@io_machinecode_tools//tools:util.bzl", "class_full_name", "class_name")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -19,17 +20,17 @@ filegroup(
 bench_deps = [
     "//src/main/java/io/machinecode/hexane",
     "//src/test/java/io/machinecode/hexane",
-    "@maven//:com_zaxxer_HikariCP",
-    "@maven//:com_mchange_mchange_commons_java",
-    "@maven//:com_mchange_c3p0",
-    "@maven//:commons_logging_commons_logging",
-    "@maven//:io_agroal_agroal_api",
-    "@maven//:io_agroal_agroal_pool",
+    "@m2//:com_zaxxer_HikariCP",
+    "@m2//:com_mchange_mchange_commons_java",
+    "@m2//:com_mchange_c3p0",
+    "@m2//:commons_logging_commons_logging",
+    "@m2//:io_agroal_agroal_api",
+    "@m2//:io_agroal_agroal_pool",
     "@io_machinecode_tools//tools/java:jmh",
-    "@maven//:org_apache_commons_commons_pool2",
-    "@maven//:org_apache_commons_commons_dbcp2",
-    "@maven//:org_apache_tomcat_tomcat_jdbc",
-    "@maven//:org_apache_tomcat_tomcat_juli",
+    "@m2//:org_apache_commons_commons_pool2",
+    "@m2//:org_apache_commons_commons_dbcp2",
+    "@m2//:org_apache_tomcat_tomcat_jdbc",
+    "@m2//:org_apache_tomcat_tomcat_juli",
 ]
 
 java_library(
@@ -40,13 +41,17 @@ java_library(
 
 [
     java_binary(
-        name = test[:-5],
-        srcs = [test],
+        name = class_name(bench),
+        srcs = [bench],
         jvm_flags = ["'%s'" % it for it in database_properties],
         main_class = "org.openjdk.jmh.Main",
+        tags = [
+            "bench",
+            "manual",
+        ],
         deps = hexane_bench_deps + bench_deps + [
             ":bench",
         ],
     )
-    for test in glob(["*Bench.java"])
+    for bench in glob(["*Bench.java"])
 ]

@@ -62,6 +62,10 @@ test:
 		--test_tag_filters=-check \
 		$(args)
 
+.PHONY: bench
+bench:
+	@for x in $$(bazel query "kind(java_binary, //src/...)"); do echo "bazel run $${x}"; done
+
 .PHONY: build-coverage
 build-coverage:
 	@if [ -e bazel-out ]; then find bazel-out -name coverage.dat -exec rm {} +; fi
@@ -115,3 +119,7 @@ site: tools
 		-d src/main/site \
 		-c 'make run-site' \
 		-w 'make serve-site'
+
+.PHONY: deploy
+deploy:
+	@bazel run //:deploy -- $$(bash -c "if grep SNAPSHOT version.txt >/dev/null; then echo snapshot; else echo release --gpg; fi")

@@ -7,11 +7,11 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 #    path = "../tools",
 #)
 
-io_machinecode_tools_version = "cb15a98dab11b60895d2cf09dc86505b0ce555f6"
+io_machinecode_tools_version = "a63b1a3c63bf84df90109bf3f4d2f3c91415f4fb"
 
 http_archive(
     name = "io_machinecode_tools",
-    sha256 = "62d21f1ebb38426da3548a29f12ac680b2c29434eca5221d3d7979f19e39b71a",
+    sha256 = "24b378850e3d1b322aaefa98ea676b77d964b9f5fa342d837686a52de276a5ef",
     strip_prefix = "tools-" + io_machinecode_tools_version,
     urls = [
         "https://mirror.bazel.build/github.com/BrentDouglas/tools/archive/%s.tar.gz" % io_machinecode_tools_version,
@@ -103,6 +103,24 @@ load("@io_machinecode_tools//imports:jmh_repositories.bzl", "jmh_repositories")
 
 jmh_repositories()
 
+load("@io_machinecode_tools//imports:profiler_repositories.bzl", "profiler_repositories")
+
+profiler_repositories()
+
+load("@io_machinecode_tools//imports:distribution_repositories.bzl", "distribution_repositories")
+
+distribution_repositories()
+
+load("@io_bazel_rules_kotlin//kotlin:repositories.bzl", "kotlin_repositories")
+
+kotlin_repositories()
+
+load("@io_bazel_rules_kotlin//kotlin:core.bzl", "kt_register_toolchains")
+
+kt_register_toolchains()
+
+load("@vaticle_bazel_distribution//maven:deps.bzl", "maven_artifacts_with_versions")
+
 junit_version = "4.12"
 
 mockito_version = "5.2.0"
@@ -188,6 +206,7 @@ maven_install(
 )
 
 maven_install(
+    name = "m2",
     artifacts = [
         "junit:junit:" + junit_version,
         "org.mockito:mockito-core:" + mockito_version,
@@ -234,6 +253,13 @@ maven_install(
         "com.atomikos:transactions-jta:" + atomikos_version,
         "com.atomikos:transactions-jdbc:" + atomikos_version,
     ],
+    fetch_sources = True,
+    repositories = maven_repositories,
+)
+
+maven_install(
+    name = "maven",
+    artifacts = maven_artifacts_with_versions,
     fetch_sources = True,
     repositories = maven_repositories,
 )

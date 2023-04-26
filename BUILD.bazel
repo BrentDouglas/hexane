@@ -4,6 +4,7 @@ load("@io_machinecode_tools//tools:ui.bzl", "pkg_app")
 load("@io_machinecode_tools//tools/java:javadoc.bzl", "java_doc")
 load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
 load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
+load("@vaticle_bazel_distribution//maven:rules.bzl", "assemble_maven", "deploy_maven")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -71,4 +72,37 @@ pkg_app(
         "//src/main/adoc:html",
         "//src/main/adoc:pdf",
     ],
+)
+
+exports_files([
+    "version.txt",
+    "workspace-refs.json",
+])
+
+assemble_maven(
+    name = "assemble",
+    developers = {
+        "1": [
+            "name=Brent Douglas",
+            "email=brent.n.douglas@gmail.com",
+            "organization=MachineCode",
+        ],
+    },
+    license = "apache",
+    project_description = "Hexane - XA Connection Pool",
+    project_name = "Hexane",
+    project_url = "https://github.com/BrentDouglas/hexane",
+    scm_url = "https://github.com/BrentDouglas/hexane.git",
+    tags = ["manual"],
+    target = "//src/main/java/io/machinecode/hexane",
+    version_file = "//:version.txt",
+    workspace_refs = "//:workspace-refs.json",
+)
+
+deploy_maven(
+    name = "deploy",
+    release = "https://oss.sonatype.org/service/local/staging/deploy/maven2/",
+    snapshot = "https://oss.sonatype.org/content/repositories/snapshots",
+    tags = ["manual"],
+    target = ":assemble",
 )
